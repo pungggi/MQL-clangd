@@ -37,20 +37,44 @@ To find the word you need in the MQL help, put the cursor on it or highlight it 
 
 ### 9.  Displaying information about mql5 function when hovers show the mouse cursor over its name.
 
-### 10.  MQL syntax highlighting.
+### 10. MQL syntax highlighting.
 
+---
 
-#
-### Quick Setup Guide: 
+### 🚀 IntelliSense & Semantic Support
+This extension now uses **clangd** to provide state-of-the-art IntelliSense, code completion, and navigation for MQL4/5. 
 
-1. Open the folder with MQL files in VSCode. Example: C:\Users\<your name>\AppData\Roaming\MetaQuotes\Terminal\D2E7219F73C8BF37CD8BF550E55FF075\MQL5. (`The folder must be named MQL4 or MQL5! This is important!!!`)
+*   **Why clangd?** It provides faster, more accurate semantic analysis and better support for complex MQL projects compared to the default Microsoft C++ engine.
+*   **Automatic Configuration**: When you run the `"MQL: Create configuration"` command, the extension automatically configures `clangd` with the correct include paths and compiler flags for your MQL version (MQL4 or MQL5).
+*   **Conflict Prevention**: To ensure the best experience, this extension automatically disables the Microsoft C++ "IntelliSense Engine" (while keeping the extension installed for other features) to prevent duplicate errors and completion items.
 
-2. Specify the path to MetaEditor in the extension settings and, if necessary, the path to "Include" files.
-3. Create a settings file "settings.json". Press `Ctrl+Shift+P` to open the command palette, select `"MQL: Create configuration"`.
+---
 
-    ![](https://raw.githubusercontent.com/L-I-V/MQL-Tools/master/images/Settings.jpg)
+### 🛠 Quick Setup Guide: 
 
-    
-4. If you wish, you can set icons for MQL files. Press  `Ctrl+Shift+P` to open the command palette, select `"MQL: Add icons to the theme"`, then select a theme to which icons will be added (icons can be added only to certain 4 themes).
+1.  **Installation**:
+    *   Install this **MQL Tools** extension from the VS Code Marketplace.
+    *   *Note: The **clangd** extension will be automatically installed as a required dependency.*
 
-   ![](https://raw.githubusercontent.com/L-I-V/MQL-Tools/master/images/Icons5.jpg)  ![](https://raw.githubusercontent.com/L-I-V/MQL-Tools/master/images/Icons4.jpg)
+2.  **Open your project**:
+    *   Open your MQL project folder (e.g., your `MQL5` or `MQL4` folder).
+    *   **Pro Tip**: Ensure your folder name contains "MQL4" or "MQL5" for automatic version detection.
+
+3.  **Basic Configuration**:
+    *   Open Settings (`Ctrl+,`) and search for `MQL Tools`.
+    *   Provide the path to your **MetaEditor** executable (essential for compilation).
+
+4.  **Initialize IntelliSense**:
+    *   Press `Ctrl+Shift+P` and run the command: `"MQL: Create configuration"`.
+    *   This one-time setup configures `clangd` to recognize your MQL code and libraries.
+
+5.  **Bonus: Icons**:
+    *   If you wish, set custom icons for MQL files. Press `Ctrl+Shift+P`, select `"MQL: Add icons to the theme"`, and choose your preferred MQL-supported theme.
+
+---
+
+### 💡 Important Notes:
+*   **Multi-root workspaces**: The configuration tool supports multi-root workspaces and will prioritize settings for the currently active file's folder.
+*   **Settings Merge**: The extension is built to be "clean" - it merges MQL flags with your existing `clangd.fallbackFlags` rather than overwriting them.
+*   **Compiler Flags**: We automatically inject `-xc++` and `-std=c++17` along with version-specific defines (`__MQL4__`/`__MQL5__`) to help clangd understand MQL syntax.
+

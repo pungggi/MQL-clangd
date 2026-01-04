@@ -6,4 +6,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+- Switched C++ IntelliSense engine from Microsoft C/C++ to clangd for improved performance and accuracy.
+
 - Initial release

@@ -156,7 +156,7 @@
 					"markdownDeprecationMessage": "%mql_tools.configuration.context%"
 				}
 			}
-		},		
+		},
 		"languages": [
 			{
 				"id": "cpp",
@@ -166,7 +166,7 @@
 					".mqh"
 				],
 				"configuration": "./syntaxes/mql.configuration.json"
-			},			
+			},
 			{
 				"id": "mql-output",
 				"mimetypes": [
@@ -185,7 +185,7 @@
 				"scopeName": "mql.output",
 				"path": "./syntaxes/mql.out.tmLanguage"
 			}
-		],		
+		],
 		"commands": [
 			{
 				"command": "mql_tools.compileScript",
@@ -298,13 +298,13 @@
 					"command": "mql_tools.checkFile",
 					"group": "navigation"
 				}
-			],			
+			],
 			"explorer/context": [
 				{
 					"when": "config.mql_tools.context == true",
 					"command": "mql_tools.Showfiles",
 					"group": "z_commands"
-				},			
+				},
 				{
 					"when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh",
 					"command": "mql_tools.openInME",
@@ -321,7 +321,7 @@
 					"group": "z_commands"
 				}
 			],
-			"mql_tools.commentary.context":[
+			"mql_tools.commentary.context": [
 				{
 					"command": "mql_tools.commentary",
 					"group": "comment"
@@ -353,7 +353,7 @@
 				}
 			]
 		},
-		"submenus": [			
+		"submenus": [
 			{
 				"id": "mql_tools.commentary.context",
 				"label": "MQL Tools"
@@ -383,7 +383,7 @@
 		]
 	},
 	"extensionDependencies": [
-		"ms-vscode.cpptools"
+		"llvm-vs-code-extensions.vscode-clangd"
 	],
 	"scripts": {
 		"lint": "eslint .",
