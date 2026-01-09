@@ -1,7 +1,7 @@
 {
     "name": "mql-clangd",
     "displayName": "MQL Clangd",
-    "description": "High-performance MQL4/MQL5 tools with Clangd support.Fork of MQL Tools by L-I-V.",
+    "description": "High-performance MQL4/MQL5 tools with Clangd support. Fork of MQL Tools by L-I-V.",
     "version": "1.0.5",
     "publisher": "ngsoftware",
     "engines": {
@@ -28,7 +28,7 @@
     "main": "./out/extension.js",
     "contributes": {
         "configuration": {
-            "title": "MQL Tools",
+            "title": "MQL Clangd",
             "properties": {
                 "mql_tools.LogFile.DeleteLog": {
                     "type": "boolean",
@@ -336,7 +336,7 @@
         "submenus": [
             {
                 "id": "mql_tools.commentary.context",
-                "label": "MQL Tools"
+                "label": "MQL Clangd"
             }
         ],
         "keybindings": [
