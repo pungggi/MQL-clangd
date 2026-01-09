@@ -13,6 +13,13 @@ class Position {
     }
 }
 
+class RelativePattern {
+    constructor(base, pattern) {
+        this.base = base;
+        this.pattern = pattern;
+    }
+}
+
 const DiagnosticSeverity = {
     Error: 0,
     Warning: 1,
@@ -20,29 +27,62 @@ const DiagnosticSeverity = {
     Hint: 3
 };
 
+const ConfigurationTarget = {
+    Global: 1,
+    Workspace: 2,
+    WorkspaceFolder: 3
+};
+
 module.exports = {
     Range,
     Position,
+    RelativePattern,
     DiagnosticSeverity,
+    ConfigurationTarget,
     env: {
         language: 'en'
     },
     window: {
-        showInformationMessage: () => { },
-        showErrorMessage: () => { },
-        createOutputChannel: () => ({ appendLine: () => { } })
+        showInformationMessage: () => Promise.resolve(),
+        showErrorMessage: () => Promise.resolve(),
+        showWarningMessage: () => Promise.resolve(),
+        createOutputChannel: () => ({
+            appendLine: () => { },
+            show: () => { },
+            clear: () => { }
+        }),
+        withProgress: (options, task) => task({ report: () => { } })
     },
     workspace: {
         getConfiguration: () => ({
-            get: () => ({}),
-            update: () => { }
-        })
+            get: (key, defaultValue) => defaultValue,
+            update: () => Promise.resolve(),
+            inspect: () => ({ workspaceValue: undefined })
+        }),
+        workspaceFolders: [],
+        findFiles: () => Promise.resolve([]),
+        fs: {
+            stat: () => Promise.resolve({ type: 1 }),
+            readFile: () => Promise.resolve(Buffer.from(''))
+        }
     },
     Uri: {
-        file: (path) => ({ fsPath: path }),
-        parse: (path) => ({ fsPath: path })
+        file: (path) => ({ fsPath: path, path: path }),
+        parse: (path) => ({ fsPath: path, path: path }),
+        joinPath: (base, ...segments) => ({ fsPath: [base.fsPath, ...segments].join('/') })
     },
     languages: {
-        createDiagnosticCollection: () => ({ clear: () => { }, set: () => { } })
+        createDiagnosticCollection: () => ({
+            clear: () => { },
+            set: () => { },
+            delete: () => { }
+        })
+    },
+    commands: {
+        executeCommand: () => Promise.resolve(),
+        registerCommand: () => ({ dispose: () => { } })
+    },
+    extensions: {
+        getExtension: () => null
     }
 };

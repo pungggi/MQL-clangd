@@ -387,7 +387,8 @@
     "scripts": {
         "lint": "eslint .",
         "pretest": "npm run lint",
-        "test": "node ./test/runTest.js"
+        "test": "node ./test/runTest.js",
+        "test:unit": "node ./test/runUnitTests.js"
     },
     "devDependencies": {
         "@types/glob": "^7.1.4",
