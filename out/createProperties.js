@@ -211,6 +211,10 @@ Diagnostics:
     - init_conversion_failed
     - reference_bind_drops_quals
     - tautological-constant-out-of-range-compare
+    - expected_arrow_after_this
+    - err_expected_arrow_after_this
+    - extraneous_token_before_semi
+    - expected_semi_after_expr
 `;
         await fs.promises.writeFile(clangdConfigPath, clangdConfig, 'utf8');
     } catch (err) {
