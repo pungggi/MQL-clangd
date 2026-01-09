@@ -1,9 +1,8 @@
 # Changelog
 
 ## UNRELEASED
-- **MQL5 Help**: Direct links to documentation pages instead of search results. Uses scraped function-to-category mapping for 566+ MQL5 functions.
-- **Offline Help**: New command `MQL: Get the MQL4/MQL5 offline help` opens local CHM files with keyword anchor (Windows/macOS/Linux).
-- **Scraper Script**: Added `scripts/scrape-mql5-docs.js` to regenerate `data/mql5-docs.json` when new functions are added.
+- **MQL5 Help**: Direct links to online documentation pages in the language of the user's VS Code.
+- **Offline Help**: New command `MQL: Get the MQL4/MQL5 offline help` opens local CHM files from MetaTrader Terminal with keyword anchor (Windows/macOS/Linux). No help files are shipped with the extension.
 
 ## 1.0.0
 - **Major Architecture Shift**: Migrated from Microsoft C/C++ to **clangd** for superior MQL intellisense and performance.

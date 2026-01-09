@@ -58,10 +58,16 @@ function openWebHelp(version, keyword) {
         const docsMap = loadMql5DocsMap();
         const keyLower = keyword.toLowerCase();
 
-        const category = docsMap[keyLower];
-        if (category) {
-            // Direct link to documentation page
-            helpUrl = `https://www.mql5.com/${webLang}/docs/${category}/${keyLower}`;
+        const docPath = docsMap[keyLower];
+        if (docPath) {
+            // Check if it's a full path (contains /) or just a category
+            if (docPath.includes('/')) {
+                // Full path: standardlibrary/tradeclasses/ctrade/ctradepositionmodify
+                helpUrl = `https://www.mql5.com/${webLang}/docs/${docPath}`;
+            } else {
+                // Old format: category only, append keyword
+                helpUrl = `https://www.mql5.com/${webLang}/docs/${docPath}/${keyLower}`;
+            }
         } else {
             // Fallback to search
             helpUrl = `https://www.mql5.com/${webLang}/search#!keyword=${encodeURIComponent(keyword)}&module=docs`;
