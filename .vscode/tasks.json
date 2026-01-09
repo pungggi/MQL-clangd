@@ -19,7 +19,7 @@
         {
             "label": "VSCE Publish",
             "type": "shell",
-            "command": "npx vsce publish --allow-missing-repository",
+            "command": "npx vsce publish --pat ${env:VSCE_PAT}",
             "presentation": {
                 "reveal": "always",
                 "panel": "shared",
