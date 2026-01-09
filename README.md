@@ -11,6 +11,8 @@
 | `compile_commands.json` | ❌ | ✅ |
 | Diagnostics in Problems tab | ❌ | ✅ |
 | Multi-root workspace support | ❌ | ✅ |
+| Direct MQL5 doc links | ❌ | ✅ |
+| Offline CHM help | ❌ | ✅ |
 | Unit tests | ❌ | ✅ |
 
 ---

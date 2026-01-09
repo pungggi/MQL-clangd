@@ -17,6 +17,7 @@
     "mql_tools.commands.checkFile.title": "Check MQL syntax",
     "mql_tools.commands.compileScript.title": "Compile MQL file using script",
     "mql_tools.commands.help.title": "Get the MQL4/MQL5 help",
+    "mql_tools.commands.offlineHelp.title": "Get the MQL4/MQL5 offline help",
     "mql_tools.commands.configurations.title": "Create configuration",
     "mql_tools.commands.Addicon.title": "Add icons to the theme",
     "mql_tools.commands.Showfiles.title": "Show/hide ex4/ex5 files",

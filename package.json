@@ -181,6 +181,11 @@
                 "category": "MQL"
             },
             {
+                "command": "mql_tools.offlineHelp",
+                "title": "%mql_tools.commands.offlineHelp.title%",
+                "category": "MQL"
+            },
+            {
                 "command": "mql_tools.configurations",
                 "title": "%mql_tools.commands.configurations.title%",
                 "category": "MQL"
@@ -338,7 +343,7 @@
             },
             {
                 "command": "mql_tools.help",
-                "key": "F1",
+                "key": "shift+F1",
                 "when": "config.mql_tools.Help.HelpON == true && resourceExtname == .mq4 || config.mql_tools.Help.HelpON == true && resourceExtname == .mq5 || config.mql_tools.Help.HelpON == true && resourceExtname == .mqh"
             }
         ]

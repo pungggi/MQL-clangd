@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.0.1
+## UNRELEASED
 - **MQL5 Help**: Direct links to documentation pages instead of search results. Uses scraped function-to-category mapping for 566+ MQL5 functions.
+- **Offline Help**: New command `MQL: Get the MQL4/MQL5 offline help` opens local CHM files with keyword anchor (Windows/macOS/Linux).
 - **Scraper Script**: Added `scripts/scrape-mql5-docs.js` to regenerate `data/mql5-docs.json` when new functions are added.
 
 ## 1.0.0
