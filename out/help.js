@@ -59,10 +59,14 @@ function Help(sm) {
     const config = vscode.workspace.getConfiguration('mql_tools'),
         extension = pathModule.extname(document.fileName).toLowerCase(),
         PathKeyHH = pathModule.join(__dirname, '../', 'files', 'KeyHH.exe'),
-        wn = vscode.workspace.name.includes('MQL4'), helpval = config.Help.HelpVal, var_loc4 = config.Help.MQL4HelpLanguage, var_loc5 = config.Help.MQL5HelpLanguage, keyword = document.getText(wordAtCursorRange);
+        wn = vscode.workspace.name ? vscode.workspace.name.includes('MQL4') : false,
+        helpval = config.get('Help.HelpVal', 500),
+        var_loc4 = config.get('Help.MQL4HelpLanguage', 'Default'),
+        var_loc5 = config.get('Help.MQL5HelpLanguage', 'Default'),
+        keyword = document.getText(wordAtCursorRange);
 
     // Check if user prefers web-based help
-    const preferWebHelp = config.Help.PreferWebHelp || false;
+    const preferWebHelp = config.get('Help.PreferWebHelp', false);
 
     let v, loc;
 
