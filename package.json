@@ -345,6 +345,26 @@
                 "command": "mql_tools.help",
                 "key": "shift+F1",
                 "when": "config.mql_tools.Help.HelpON == true && resourceExtname == .mq4 || config.mql_tools.Help.HelpON == true && resourceExtname == .mq5 || config.mql_tools.Help.HelpON == true && resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.configurations",
+                "key": "ctrl+shift+m",
+                "when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.openInME",
+                "key": "ctrl+alt+o",
+                "when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.commentary",
+                "key": "ctrl+alt+c",
+                "when": "editorTextFocus && resourceExtname == .mq4 || editorTextFocus && resourceExtname == .mq5 || editorTextFocus && resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.InsMQH",
+                "key": "ctrl+alt+i",
+                "when": "editorTextFocus && resourceExtname == .mq4 || editorTextFocus && resourceExtname == .mq5 || editorTextFocus && resourceExtname == .mqh"
             }
         ]
     },
