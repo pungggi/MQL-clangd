@@ -148,7 +148,18 @@ function Compile(rt) {
                         const diagsByFile = {};
                         log.diagnostics.forEach(d => {
                             if (!diagsByFile[d.file]) diagsByFile[d.file] = [];
-                            diagsByFile[d.file].push(new vscode.Diagnostic(d.range, d.message, d.severity));
+                            const diag = new vscode.Diagnostic(d.range, d.message, d.severity);
+
+                            // Add error code with link to MQL5 documentation
+                            if (d.errorCode) {
+                                const docLang = language === 'ru' ? 'ru' : 'en';
+                                diag.code = {
+                                    value: `MQL${d.errorCode}`,
+                                    target: vscode.Uri.parse(`https://www.mql5.com/${docLang}/docs/basis/errors/compilationerrors`)
+                                };
+                            }
+
+                            diagsByFile[d.file].push(diag);
                         });
                         for (const file in diagsByFile) {
                             diagnosticCollection.set(vscode.Uri.file(file), diagsByFile[file]);
@@ -267,7 +278,8 @@ function replaceLog(str, f) {
                             file: fullPath,
                             range: new vscode.Range(line, col, line, col + 1),
                             message: name_res,
-                            severity: severity
+                            severity: severity,
+                            errorCode: gh  // Include error code for documentation link
                         });
 
                         const linePos = link_res.match(REG_LINE_POS);
