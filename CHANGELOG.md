@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+- **MQL5 Help**: Direct links to documentation pages instead of search results. Uses scraped function-to-category mapping for 566+ MQL5 functions.
+- **Scraper Script**: Added `scripts/scrape-mql5-docs.js` to regenerate `data/mql5-docs.json` when new functions are added.
+
 ## 1.0.0
 - **Major Architecture Shift**: Migrated from Microsoft C/C++ to **clangd** for superior MQL intellisense and performance.
 - **Performance Overhaul**: Converted blocking synchronous I/O to asynchronous operations across the extension.

@@ -45,7 +45,7 @@ function Compile(rt) {
         config = vscode.workspace.getConfiguration('mql_tools'),
         fileName = pathModule.basename(path),
         extension = pathModule.extname(path).toLowerCase(),
-        PathScript = pathModule.join(__dirname, '../', 'files', 'MQL Tools_Compiler.exe'),
+        PathScript = pathModule.join(__dirname, '../', 'files', 'MQL_Compiler.exe'),
         logDir = config.LogFile.NameLog, Timemini = config.Script.Timetomini,
         mme = config.Script.MiniME, cme = config.Script.CloseME,
         wn = vscode.workspace.name.includes('MQL4'), startT = new Date(),
