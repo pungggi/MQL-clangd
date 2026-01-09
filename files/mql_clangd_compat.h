@@ -689,23 +689,95 @@ long HistoryDealGetInteger(ulong ticket_number, ENUM_DEAL_PROPERTY_INTEGER prope
 double HistoryDealGetDouble(ulong ticket_number, ENUM_DEAL_PROPERTY_DOUBLE property_id);
 string HistoryDealGetString(ulong ticket_number, ENUM_DEAL_PROPERTY_STRING property_id);
 
+// MQL4 Trading functions (legacy compatibility)
+int OrderSend(string symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment = "", int magic = 0, datetime expiration = 0, color arrow_color = clrNONE);
+bool OrderModify(int ticket, double price, double stoploss, double takeprofit, datetime expiration, color arrow_color = clrNONE);
+bool OrderClose(int ticket, double lots, double price, int slippage, color arrow_color = clrNONE);
+bool OrderCloseBy(int ticket, int opposite, color arrow_color = clrNONE);
+bool OrderDelete(int ticket, color arrow_color = clrNONE);
+bool OrderSelect(int index, int select, int pool = MODE_TRADES);
+int OrderType();
+int OrderTicket();
+double OrderOpenPrice();
+double OrderClosePrice();
+double OrderLots();
+double OrderProfit();
+double OrderStopLoss();
+double OrderTakeProfit();
+double OrderCommission();
+double OrderSwap();
+datetime OrderOpenTime();
+datetime OrderCloseTime();
+datetime OrderExpiration();
+int OrderMagicNumber();
+string OrderSymbol();
+string OrderComment();
+
+// MQL4 Order pool constants
+#define MODE_TRADES 0
+#define MODE_HISTORY 1
+#define SELECT_BY_POS 0
+#define SELECT_BY_TICKET 1
+
+// MQL4 Order type constants
+#define OP_BUY 0
+#define OP_SELL 1
+#define OP_BUYLIMIT 2
+#define OP_SELLLIMIT 3
+#define OP_BUYSTOP 4
+#define OP_SELLSTOP 5
+
 // Series functions
 int Bars(string symbol, ENUM_TIMEFRAMES timeframe);
 int Bars(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time);
 int iBars(string symbol, ENUM_TIMEFRAMES timeframe);
 int iBarShift(string symbol, ENUM_TIMEFRAMES timeframe, datetime time, bool exact = false);
 long SeriesInfoInteger(string symbol, ENUM_TIMEFRAMES timeframe, ENUM_SERIES_INFO_INTEGER prop_id);
+// CopyRates - 3 overloads
 int CopyRates(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, MqlRates rates_array[]);
 int CopyRates(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, MqlRates rates_array[]);
 int CopyRates(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, MqlRates rates_array[]);
+
+// CopyTime - 3 overloads
 int CopyTime(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, datetime time_array[]);
+int CopyTime(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, datetime time_array[]);
+int CopyTime(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, datetime time_array[]);
+
+// CopyOpen - 3 overloads
 int CopyOpen(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, double open_array[]);
+int CopyOpen(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, double open_array[]);
+int CopyOpen(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, double open_array[]);
+
+// CopyHigh - 3 overloads
 int CopyHigh(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, double high_array[]);
+int CopyHigh(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, double high_array[]);
+int CopyHigh(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, double high_array[]);
+
+// CopyLow - 3 overloads
 int CopyLow(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, double low_array[]);
+int CopyLow(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, double low_array[]);
+int CopyLow(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, double low_array[]);
+
+// CopyClose - 3 overloads
 int CopyClose(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, double close_array[]);
+int CopyClose(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, double close_array[]);
+int CopyClose(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, double close_array[]);
+
+// CopyTickVolume - 3 overloads
 int CopyTickVolume(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, long volume_array[]);
+int CopyTickVolume(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, long volume_array[]);
+int CopyTickVolume(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, long volume_array[]);
+
+// CopyRealVolume - 3 overloads
 int CopyRealVolume(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, long volume_array[]);
+int CopyRealVolume(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, long volume_array[]);
+int CopyRealVolume(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, long volume_array[]);
+
+// CopySpread - 3 overloads
 int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int count, int spread_array[]);
+int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, int spread_array[]);
+int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, int spread_array[]);
+
 int CopyTicks(string symbol, MqlTick ticks_array[], uint flags = COPY_TICKS_ALL, ulong from = 0, uint count = 0);
 int CopyTicksRange(string symbol, MqlTick ticks_array[], uint flags, ulong from_msc, ulong to_msc);
 
@@ -886,9 +958,17 @@ bool ObjectSetInteger(long chart_id, string name, ENUM_OBJECT_PROPERTY_INTEGER p
 bool ObjectSetInteger(long chart_id, string name, ENUM_OBJECT_PROPERTY_INTEGER prop_id, int prop_modifier, long prop_value);
 bool ObjectSetString(long chart_id, string name, ENUM_OBJECT_PROPERTY_STRING prop_id, string prop_value);
 bool ObjectSetString(long chart_id, string name, ENUM_OBJECT_PROPERTY_STRING prop_id, int prop_modifier, string prop_value);
+// ObjectGetDouble - 2 overloads
 double ObjectGetDouble(long chart_id, string name, ENUM_OBJECT_PROPERTY_DOUBLE prop_id, int prop_modifier = 0);
+bool ObjectGetDouble(long chart_id, string name, ENUM_OBJECT_PROPERTY_DOUBLE prop_id, int prop_modifier, double& double_var);
+
+// ObjectGetInteger - 2 overloads
 long ObjectGetInteger(long chart_id, string name, ENUM_OBJECT_PROPERTY_INTEGER prop_id, int prop_modifier = 0);
+bool ObjectGetInteger(long chart_id, string name, ENUM_OBJECT_PROPERTY_INTEGER prop_id, int prop_modifier, long& long_var);
+
+// ObjectGetString - 2 overloads
 string ObjectGetString(long chart_id, string name, ENUM_OBJECT_PROPERTY_STRING prop_id, int prop_modifier = 0);
+bool ObjectGetString(long chart_id, string name, ENUM_OBJECT_PROPERTY_STRING prop_id, int prop_modifier, string& string_var);
 bool ObjectMove(long chart_id, string name, int point_index, datetime time, double price);
 int ObjectFind(long chart_id, string name);
 datetime ObjectGetTimeByValue(long chart_id, string name, double value, int line_id = 0);
@@ -910,9 +990,17 @@ bool ChartSetDouble(long chart_id, ENUM_CHART_PROPERTY_DOUBLE prop_id, double va
 bool ChartSetInteger(long chart_id, ENUM_CHART_PROPERTY_INTEGER prop_id, long value);
 bool ChartSetString(long chart_id, ENUM_CHART_PROPERTY_STRING prop_id, string value);
 bool ChartSetSymbolPeriod(long chart_id, string symbol, ENUM_TIMEFRAMES period);
+// ChartGetDouble - 2 overloads
 double ChartGetDouble(long chart_id, ENUM_CHART_PROPERTY_DOUBLE prop_id, int sub_window = 0);
+bool ChartGetDouble(long chart_id, ENUM_CHART_PROPERTY_DOUBLE prop_id, int sub_window, double& double_var);
+
+// ChartGetInteger - 2 overloads
 long ChartGetInteger(long chart_id, ENUM_CHART_PROPERTY_INTEGER prop_id, int sub_window = 0);
+bool ChartGetInteger(long chart_id, ENUM_CHART_PROPERTY_INTEGER prop_id, int sub_window, long& long_var);
+
+// ChartGetString - 2 overloads
 string ChartGetString(long chart_id, ENUM_CHART_PROPERTY_STRING prop_id);
+bool ChartGetString(long chart_id, ENUM_CHART_PROPERTY_STRING prop_id, string& string_var);
 bool ChartNavigate(long chart_id, ENUM_CHART_POSITION position, int shift = 0);
 long ChartID();
 int ChartWindowFind(long chart_id, string indicator_shortname);
@@ -983,7 +1071,12 @@ int iTriX(string symbol, ENUM_TIMEFRAMES period, int ma_period, ENUM_APPLIED_PRI
 int iVIDyA(string symbol, ENUM_TIMEFRAMES period, int cmo_period, int ema_period, int ma_shift, ENUM_APPLIED_PRICE applied_price);
 int iVolumes(string symbol, ENUM_TIMEFRAMES period, ENUM_APPLIED_VOLUME applied_volume);
 int iWPR(string symbol, ENUM_TIMEFRAMES period, int calc_period);
-double CopyBuffer(int indicator_handle, int buffer_num, int start_pos, int count, double buffer[]);
+
+// CopyBuffer - 3 overloads
+int CopyBuffer(int indicator_handle, int buffer_num, int start_pos, int count, double buffer[]);
+int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, int count, double buffer[]);
+int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, datetime stop_time, double buffer[]);
+
 bool IndicatorSetDouble(int prop_id, double prop_value);
 bool IndicatorSetDouble(int prop_id, int prop_modifier, double prop_value);
 bool IndicatorSetInteger(int prop_id, int prop_value);
