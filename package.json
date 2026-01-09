@@ -111,45 +111,6 @@
                     "default": true,
                     "description": "%mql_tools.configuration.HelpON.description%"
                 },
-                "mql_tools.Help.MQL4HelpLanguage": {
-                    "type": "string",
-                    "default": "Default",
-                    "enum": [
-                        "Default",
-                        "Русский",
-                        "English"
-                    ],
-                    "description": "%mql_tools.configuration.MQL4HelpLanguage.description%"
-                },
-                "mql_tools.Help.MQL5HelpLanguage": {
-                    "type": "string",
-                    "default": "Default",
-                    "enum": [
-                        "Default",
-                        "Русский",
-                        "German",
-                        "Spanish",
-                        "French",
-                        "Chinese",
-                        "Italian",
-                        "Portuguese",
-                        "Turkish",
-                        "Japanese",
-                        "English"
-                    ],
-                    "description": "%mql_tools.configuration.MQL5HelpLanguage.description%"
-                },
-                "mql_tools.Help.HelpVal": {
-                    "type": "number",
-                    "default": 500,
-                    "minimum": 150,
-                    "description": "%mql_tools.configuration.HelpVal.description%"
-                },
-                "mql_tools.Help.PreferWebHelp": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%mql_tools.configuration.PreferWebHelp.description%"
-                },
                 "mql_tools.context": {
                     "type": "boolean",
                     "default": false,
