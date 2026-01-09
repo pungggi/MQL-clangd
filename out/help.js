@@ -27,12 +27,11 @@ function openWebHelp(version, keyword) {
     let helpUrl;
 
     if (version === 4) {
-        // MQL4 docs only support en/ru
-        const mql4Lang = (webLang === 'ru') ? 'ru' : 'en';
-        helpUrl = `https://docs.mql4.com/${mql4Lang}/search?keyword=${encodeURIComponent(keyword)}`;
+        // MQL4 docs - search page
+        helpUrl = `https://docs.mql4.com/search?keyword=${encodeURIComponent(keyword)}`;
     } else {
-        // MQL5 docs support multiple languages
-        helpUrl = `https://www.mql5.com/${webLang}/docs/search?keyword=${encodeURIComponent(keyword)}`;
+        // MQL5 docs - search page with language support
+        helpUrl = `https://www.mql5.com/${webLang}/search?keyword=${encodeURIComponent(keyword)}`;
     }
 
     vscode.env.openExternal(vscode.Uri.parse(helpUrl));
