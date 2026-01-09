@@ -139,8 +139,28 @@ async function CreateProperties() {
         const targetFiles = await vscode.workspace.findFiles(new vscode.RelativePattern(workspaceFolder, '**/*.{mq4,mq5,mqh}'));
         const compileCommands = targetFiles.map(fileUri => {
             const filePath = normalizePath(fileUri.fsPath);
+            const ext = pathModule.extname(filePath).toLowerCase();
+
+            // Build arguments with MQL4/MQL5 specific defines
             const args = ['clang++'];
-            arrPath.forEach(flag => { if (flag) args.push(flag); });
+            arrPath.forEach(flag => {
+                if (flag) {
+                    // Replace __MQL5__ with __MQL4__ for .mq4 files
+                    if (ext === '.mq4' && flag === '-D__MQL5__') {
+                        args.push('-D__MQL4__');
+                    } else {
+                        args.push(flag);
+                    }
+                }
+            });
+
+            // Add file-specific defines
+            if (ext === '.mq4') {
+                args.push('-D__MQL4_BUILD__');
+            } else if (ext === '.mq5') {
+                args.push('-D__MQL5_BUILD__');
+            }
+
             args.push(filePath);
 
             return {
