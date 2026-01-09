@@ -8,6 +8,43 @@ const sleep = require('util').promisify(setTimeout);
 const language = vscode.env.language;
 const ext = require("./extension");
 
+const isWindows = process.platform === 'win32';
+
+// Map internal locale codes to web URL language codes
+const webLangMap = {
+    '': 'en',
+    '_russian': 'ru',
+    '_german': 'de',
+    '_spanish': 'es',
+    '_french': 'fr',
+    '_chinese': 'zh',
+    '_italian': 'it',
+    '_japanese': 'ja',
+    '_portuguese': 'pt',
+    '_turkish': 'tr'
+};
+
+/**
+ * Opens web-based MQL documentation
+ * @param {number} version - MQL version (4 or 5)
+ * @param {string} keyword - Keyword to search for
+ * @param {string} loc - Locale code (e.g., '_german', '_russian', '')
+ */
+function openWebHelp(version, keyword, loc) {
+    const webLang = webLangMap[loc] || 'en';
+    let helpUrl;
+
+    if (version === 4) {
+        // MQL4 docs only support en/ru
+        const mql4Lang = (webLang === 'ru') ? 'ru' : 'en';
+        helpUrl = `https://docs.mql4.com/${mql4Lang}/search?keyword=${encodeURIComponent(keyword)}`;
+    } else {
+        // MQL5 docs support multiple languages
+        helpUrl = `https://www.mql5.com/${webLang}/docs/search?keyword=${encodeURIComponent(keyword)}`;
+    }
+
+    vscode.env.openExternal(vscode.Uri.parse(helpUrl));
+}
 
 function Help(sm) {
     const editor = vscode.window.activeTextEditor;
@@ -23,6 +60,9 @@ function Help(sm) {
         extension = pathModule.extname(document.fileName).toLowerCase(),
         PathKeyHH = pathModule.join(__dirname, '../', 'files', 'KeyHH.exe'),
         wn = vscode.workspace.name.includes('MQL4'), helpval = config.Help.HelpVal, var_loc4 = config.Help.MQL4HelpLanguage, var_loc5 = config.Help.MQL5HelpLanguage, keyword = document.getText(wordAtCursorRange);
+
+    // Check if user prefers web-based help
+    const preferWebHelp = config.Help.PreferWebHelp || false;
 
     let v, loc;
 
@@ -47,10 +87,17 @@ function Help(sm) {
     }
     else return undefined;
 
+    // Non-Windows OR user prefers web help: use web-based documentation
+    if (!isWindows || preferWebHelp) {
+        openWebHelp(v, keyword, loc);
+        return;
+    }
+
+    // Windows: use local CHM help files
     const PathHelp = pathModule.join(__dirname, '../', 'files', 'help', 'mql' + v + loc + '.chm');
 
     if (!fs.existsSync(PathHelp))
-        return download(v, loc);
+        return download(v, loc, keyword);
 
     childProcess.exec(`tasklist /FI "IMAGENAME eq KeyHH.exe"`, (err, stdout) => {
         if (stdout && stdout.includes("KeyHH.exe") != true) {
@@ -62,7 +109,7 @@ function Help(sm) {
     });
 }
 
-function download(n, locname) {
+function download(n, locname, keyword) {
     vscode.window.withProgress(
         {
             location: vscode.ProgressLocation.Notification,
@@ -86,6 +133,8 @@ function download(n, locname) {
                             file.on('error', () => {
                                 resolve();
                                 vscode.window.showErrorMessage(ext.lg['help_er_save']);
+                                // Fallback to web help on error
+                                if (keyword) openWebHelp(n, keyword, locname);
                             });
 
                             file.on('finish', () => {
@@ -96,6 +145,8 @@ function download(n, locname) {
                         } else {
                             resolve();
                             vscode.window.showErrorMessage(`${ext.lg['help_er_statusCode']} ${response.statusCode}`);
+                            // Fallback to web help on error
+                            if (keyword) openWebHelp(n, keyword, locname);
                         }
                     }
                 );
@@ -103,6 +154,8 @@ function download(n, locname) {
                 req.on('error', () => {
                     resolve();
                     vscode.window.showErrorMessage(ext.lg['help_er_noconnect']);
+                    // Fallback to web help on error
+                    if (keyword) openWebHelp(n, keyword, locname);
                 });
             });
         }

@@ -15,6 +15,7 @@
     "mql_tools.configuration.MQL4HelpLanguage.description": "Выбор языка справочника MQL4",
     "mql_tools.configuration.MQL5HelpLanguage.description": "Выбор языка справочника MQL5",
     "mql_tools.configuration.HelpVal.description": "Параметр вызова справочника",
+    "mql_tools.configuration.PreferWebHelp.description": "Использовать веб-документацию MQL вместо локальных CHM файлов (рекомендуется для macOS/Linux)",
     "mql_tools.configuration.ForcedIncludes.description": "Дополнительные заголовочные файлы для принудительного включения в анализ clangd (например, [\"Include/JAson.mqh\"] для сторонних библиотек)",
     "mql_tools.configuration.context": "Не отключать!",
     "mql_tools.commands.compileFile.title": "Компилировать MQL файл",

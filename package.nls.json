@@ -15,6 +15,7 @@
     "mql_tools.configuration.MQL4HelpLanguage.description": "Choosing the MQL4 help Language",
     "mql_tools.configuration.MQL5HelpLanguage.description": "Choosing the MQL5 help Language",
     "mql_tools.configuration.HelpVal.description": "The help call parameter",
+    "mql_tools.configuration.PreferWebHelp.description": "Use web-based MQL documentation instead of local CHM files (recommended for macOS/Linux)",
     "mql_tools.configuration.context": "Do not disable!",
     "mql_tools.commands.compileFile.title": "Compile MQL file",
     "mql_tools.commands.checkFile.title": "Check MQL syntax",

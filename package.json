@@ -145,6 +145,11 @@
                     "minimum": 150,
                     "description": "%mql_tools.configuration.HelpVal.description%"
                 },
+                "mql_tools.Help.PreferWebHelp": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%mql_tools.configuration.PreferWebHelp.description%"
+                },
                 "mql_tools.context": {
                     "type": "boolean",
                     "default": false,
