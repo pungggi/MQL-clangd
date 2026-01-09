@@ -29,6 +29,6 @@
     "mql_tools.commands.InsImport.title": "Insert DLL/EX5 as #import",
     "mql_tools.commands.InsTime.title": "Insert Datetime as YYYY.MM.DD hh:mm:ss",
     "mql_tools.commands.InsIcon.title": "Insert Icon as #property",
-    "mql_tools.commands.openInME.title": "Open in 'MetaEditor'",    
+    "mql_tools.commands.openInME.title": "Open in 'MetaEditor'",
     "mql_tools.commands.createCommentary.title": "Create a function comment"
 }

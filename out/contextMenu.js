@@ -58,9 +58,9 @@ function InsertNameFileMQL(uri) {
 
     const activeEditor = vscode.window.activeTextEditor, RelativePath = vscode.workspace.asRelativePath(uri.fsPath), extension = pathModule.extname(activeEditor.document.fileName),
         pos = new vscode.Position(0, 0);
-        
+
     if (extension === '.mqh') activeEditor.edit(edit => edit.insert(pos, `//###<${RelativePath}>\n`));
-    
+
 }
 
 function InsertMQH() {
@@ -74,15 +74,15 @@ function InsertMQH() {
     };
 
     vscode.window.showOpenDialog(options).then(fileUri => {
-        if (fileUri && fileUri[0]) 
-            InsertNameFileMQH(fileUri[0])        
+        if (fileUri && fileUri[0])
+            InsertNameFileMQH(fileUri[0])
     })
-            
+
 }
 
 function InsertNameFileMQH(uri) {
 
-    const { document, selection, edit } = vscode.window.activeTextEditor, NName = uri.fsPath, RelativePath = vscode.workspace.asRelativePath(NName), 
+    const { document, selection, edit } = vscode.window.activeTextEditor, NName = uri.fsPath, RelativePath = vscode.workspace.asRelativePath(NName),
         Path = document.fileName, extension = pathModule.extname(Path),
         d = selection.start.line, ns = document.lineAt(d).text.length, pos = new vscode.Position(d, ns);
 
@@ -148,7 +148,7 @@ function InsertTime() {
         time = `D'${ext.tf(date, 'Y')}.${ext.tf(date, 'M')}.${ext.tf(date, 'D')} ${ext.tf(date, 'h')}:${ext.tf(date, 'm')}:${ext.tf(date, 's')}'`,
         pos = new vscode.Position(start.line, start.character);
 
-    (end.line !== start.line || end.character !== start.character) ? edit(edit => edit.replace(selection, time)) : edit(edit => edit.insert(pos, time));    
+    (end.line !== start.line || end.character !== start.character) ? edit(edit => edit.replace(selection, time)) : edit(edit => edit.insert(pos, time));
 }
 
 function CreateComment() {
@@ -161,13 +161,13 @@ function CreateComment() {
     const snip = document.getText(wordAtCursorRange),
         regEx = new RegExp(`${snip.replace('(', '\\(')}([\\s+\\n+\\w+&\\[\\]\\,=]*)\\)(?:(?:(?:\\s+|\\n)|)\\/\\*(?:.|\\n)*\\*\\/|(?:\\s+|)\\/\\/.*|)(?:\\{|\\s+\\{)`);
     let a, args;
-    
-    if (args = document.getText().match(regEx)) {        
+
+    if (args = document.getText().match(regEx)) {
         const space = ''.padEnd(wordAtCursorRange.start.character, ' ');
         let comment = space + '/**\n', type;
         comment += space + ' * ' + ext.lg['comm_func'] + '\n';
         args[1].replace(/\s+/g, ' ').trim().split(',').forEach((item, index) => { if (a = item.match(/(?<= )(?:[\w&\[\]=]+)$/, 'g')) comment += `${space} * @param  ${a[0]}: ${ext.lg['comm_arg']} ${index + 1}\n` });
-        if((type = snip.match(reg)[1]) != 'void') comment += `${space} * @return ( ${type} )\n`;        
+        if ((type = snip.match(reg)[1]) != 'void') comment += `${space} * @return ( ${type} )\n`;
         comment += space + ' */\n';
 
         edit(edit => edit.insert(new vscode.Position(wordAtCursorRange.start.line, 0), comment));
@@ -175,9 +175,9 @@ function CreateComment() {
 }
 
 function OpenFileInMetaEditor(uri) {
-    const extension = pathModule.extname(uri.fsPath), config = vscode.workspace.getConfiguration('mql_tools'), wn = vscode.workspace.name.includes('MQL4'), fileName = pathModule.basename(uri.fsPath);
+    const extension = pathModule.extname(uri.fsPath).toLowerCase(), config = vscode.workspace.getConfiguration('mql_tools'), wn = vscode.workspace.name.includes('MQL4'), fileName = pathModule.basename(uri.fsPath);
     let MetaDir, CommM;
-    
+
     if (['.mq4', '.mqh'].includes(extension) && wn) {
         MetaDir = config.Metaeditor.Metaeditor4Dir;
         CommM = ext.lg['path_editor4'];
@@ -189,9 +189,10 @@ function OpenFileInMetaEditor(uri) {
     else
         return undefined;
 
-    const Nm = pathModule.basename(MetaDir), Pm = pathModule.dirname(MetaDir);
+    const Nm = pathModule.basename(MetaDir), Pm = pathModule.dirname(MetaDir),
+        lowNm = Nm.toLowerCase();
 
-    if (!(fs.existsSync(Pm) && (Nm === 'metaeditor.exe' || Nm === 'metaeditor64.exe'))) {
+    if (!(fs.existsSync(Pm) && (lowNm === 'metaeditor.exe' || lowNm === 'metaeditor64.exe'))) {
         return vscode.window.showErrorMessage(`${CommM} [${MetaDir}]`);
     }
 
@@ -205,7 +206,7 @@ function OpenFileInMetaEditor(uri) {
 
 
 module.exports = {
-	ShowFiles,	
+    ShowFiles,
     InsertNameFileMQH,
     InsertMQH,
     InsertNameFileMQL,
