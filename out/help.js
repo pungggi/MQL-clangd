@@ -3,7 +3,7 @@ const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 const language = vscode.env.language;
 const platform = process.platform; // 'win32', 'darwin', 'linux'
 
@@ -201,22 +201,25 @@ function openOfflineHelp(version, keyword) {
     if (platform === 'win32') {
         // Windows: Use hh.exe with mk:@MSITStore protocol
         // Format: hh.exe mk:@MSITStore:path\to\file.chm::/<topic>.htm
-        const hhCommand = `hh.exe "mk:@MSITStore:${chmFile}::/${keyLower}.htm"`;
-        exec(hhCommand, (err) => {
-            if (err) {
-                // Fallback: just open the CHM file
-                exec(`hh.exe "${chmFile}"`);
-            }
+        // Using spawn with args array to prevent command injection
+        const topicUrl = `mk:@MSITStore:${chmFile}::/${keyLower}.htm`;
+        const child = spawn('hh.exe', [topicUrl], { detached: true, stdio: 'ignore' });
+        child.on('error', () => {
+            // Fallback: just open the CHM file
+            const fallbackChild = spawn('hh.exe', [chmFile], { detached: true, stdio: 'ignore' });
+            fallbackChild.unref();
         });
+        child.unref();
     } else {
         // macOS/Linux: Open with default viewer (xchm, kchmviewer, etc.)
         // CHM viewers don't typically support anchors, so just open the file
+        // Using spawn with args array to prevent command injection
         const openCmd = platform === 'darwin' ? 'open' : 'xdg-open';
-        exec(`${openCmd} "${chmFile}"`, (err) => {
-            if (err) {
-                vscode.window.showErrorMessage(`Failed to open CHM file: ${err.message}`);
-            }
+        const child = spawn(openCmd, [chmFile], { detached: true, stdio: 'ignore' });
+        child.on('error', (err) => {
+            vscode.window.showErrorMessage(`Failed to open CHM file: ${err.message}`);
         });
+        child.unref();
     }
 }
 
