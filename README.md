@@ -1,6 +1,6 @@
 > **Note**: This is a fork of [MQL Tools](https://github.com/L-I-V/MQL-Tools) by **L-I-V**. This edition adds **clangd** support and significant performance optimizations.
 
-![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/pungggi/MQL-Tools-clangd?utm_source=oss&utm_medium=github&utm_campaign=pungggi%2FMQL-Tools-clangd&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/pungggi/MQL-Clangd?utm_source=oss&utm_medium=github&utm_campaign=pungggi%2FMQL-Clangd&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 ### 🚀 IntelliSense & Semantic Support
 This extension uses **clangd** to provide state-of-the-art IntelliSense, code completion, and navigation for MQL4/5. 
