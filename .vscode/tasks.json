@@ -43,8 +43,8 @@
         {
             "label": "Publish to Marketplaces",
             "dependsOn": [
-                "VSCE Publish",
-                "OVSX Publish"
+                "OVSX Publish",
+                "VSCE Publish"
             ],
             "dependsOrder": "parallel",
             "presentation": {
