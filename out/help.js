@@ -52,7 +52,9 @@ function openWebHelp(version, keyword) {
 
     if (version === 4) {
         // MQL4 docs - direct search in documentation
-        helpUrl = `https://docs.mql4.com/search?keyword=${encodeURIComponent(keyword)}`;
+        // MQL4 supports only 'cn', 'ru', 'en' language paths
+        const mql4Lang = webLang === 'zh' ? 'cn' : (webLang === 'ru' ? 'ru' : 'en');
+        helpUrl = `https://docs.mql4.com/${mql4Lang}/search?keyword=${encodeURIComponent(keyword)}`;
     } else {
         // MQL5 docs - try direct link first, fallback to search
         const docsMap = loadMql5DocsMap();
