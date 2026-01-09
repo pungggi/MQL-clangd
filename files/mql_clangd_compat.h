@@ -172,7 +172,16 @@ enum ENUM_DEAL_PROPERTY_DOUBLE { DEAL_VOLUME=0, DEAL_PRICE=1, DEAL_COMMISSION=2,
 enum ENUM_DEAL_PROPERTY_STRING { DEAL_SYMBOL=0, DEAL_COMMENT=1, DEAL_EXTERNAL_ID=2 };
 
 enum ENUM_DEAL_ENTRY { DEAL_ENTRY_IN=0, DEAL_ENTRY_OUT=1, DEAL_ENTRY_INOUT=2, DEAL_ENTRY_OUT_BY=3, DEAL_ENTRY_STATE=4 };
-enum ENUM_DEAL_REASON { DEAL_REASON_CLIENT=0, DEAL_REASON_MOBILE=1, DEAL_REASON_WEB=2, DEAL_REASON_EXPERT=3, DEAL_REASON_SL=4, DEAL_REASON_TP=5, DEAL_REASON_SO=6, DEAL_REASON_ROLLOVER=7, DEAL_REASON_VMARGIN=8, DEAL_REASON_SPLIT=9 };
+enum ENUM_DEAL_REASON {
+    DEAL_REASON_CLIENT=0, DEAL_REASON_MOBILE=1, DEAL_REASON_WEB=2, DEAL_REASON_EXPERT=3,
+    DEAL_REASON_SL=4, DEAL_REASON_TP=5, DEAL_REASON_SO=6, DEAL_REASON_ROLLOVER=7,
+    DEAL_REASON_VMARGIN=8, DEAL_REASON_SPLIT=9, DEAL_REASON_BALANCE=10, DEAL_REASON_CREDIT=11,
+    DEAL_REASON_CHARGE=12, DEAL_REASON_CORRECTION=13, DEAL_REASON_BONUS=14,
+    DEAL_REASON_COMMISSION=15, DEAL_REASON_COMMISSION_DAILY=16, DEAL_REASON_COMMISSION_MONTHLY=17,
+    DEAL_REASON_COMMISSION_AGENT_DAILY=18, DEAL_REASON_COMMISSION_AGENT_MONTHLY=19,
+    DEAL_REASON_INTEREST=20, DEAL_REASON_DIVIDEND=21, DEAL_REASON_DIVIDEND_FRANKED=22,
+    DEAL_REASON_TAX=23, DEAL_REASON_CORPORATE_ACTION=24
+};
 enum ENUM_ORDER_REASON { ORDER_REASON_CLIENT=0, ORDER_REASON_MOBILE=1, ORDER_REASON_WEB=2, ORDER_REASON_EXPERT=3, ORDER_REASON_SL=4, ORDER_REASON_TP=5, ORDER_REASON_SO=6 };
 enum ENUM_POSITION_REASON { POSITION_REASON_CLIENT=0, POSITION_REASON_MOBILE=1, POSITION_REASON_WEB=2, POSITION_REASON_EXPERT=3 };
 
@@ -1036,6 +1045,48 @@ int WindowsTotal();
 int WindowXOnDropped();
 int WindowYOnDropped();
 
+// Database functions (SQLite)
+// Database flags
+#define DATABASE_OPEN_READONLY  1
+#define DATABASE_OPEN_READWRITE 2
+#define DATABASE_OPEN_CREATE    4
+#define DATABASE_OPEN_MEMORY    8
+#define DATABASE_OPEN_COMMON    16
+
+// Database field types
+enum ENUM_DATABASE_FIELD_TYPE {
+    DATABASE_FIELD_TYPE_INVALID=-1,
+    DATABASE_FIELD_TYPE_INTEGER=1,
+    DATABASE_FIELD_TYPE_FLOAT=2,
+    DATABASE_FIELD_TYPE_TEXT=3,
+    DATABASE_FIELD_TYPE_BLOB=4,
+    DATABASE_FIELD_TYPE_NULL=5
+};
+
+int DatabaseOpen(string filename, uint flags);
+void DatabaseClose(int database);
+bool DatabaseExecute(int database, string sql);
+int DatabasePrepare(int database, string sql, ...);
+bool DatabaseReset(int request);
+bool DatabaseRead(int request);
+bool DatabaseReadBind(int request, void& struct_object);
+void DatabaseFinalize(int request);
+bool DatabaseTransactionBegin(int database);
+bool DatabaseTransactionCommit(int database);
+bool DatabaseTransactionRollback(int database);
+int DatabaseColumnsCount(int request);
+string DatabaseColumnName(int request, int column);
+ENUM_DATABASE_FIELD_TYPE DatabaseColumnType(int request, int column);
+int DatabaseColumnSize(int request, int column);
+string DatabaseColumnText(int request, int column);
+long DatabaseColumnInteger(int request, int column);
+double DatabaseColumnDouble(int request, int column);
+bool DatabaseColumnBlob(int request, int column, void& data[]);
+bool DatabaseTableExists(int database, string table);
+bool DatabaseExport(int database, string table_or_sql, string filename, uint flags, string separator);
+bool DatabaseImport(int database, string filename, string table, uint flags, string separator, ulong skip_rows, string skip_comments);
+bool DatabasePrint(int database, string table_or_sql, uint flags);
+
 // Indicator functions
 int iAC(string symbol, ENUM_TIMEFRAMES period);
 int iAD(string symbol, ENUM_TIMEFRAMES period, ENUM_APPLIED_VOLUME applied_volume);
@@ -1142,6 +1193,89 @@ int CryptEncode(ENUM_CRYPT_METHOD method, const uchar data[], const uchar key[],
 int CryptDecode(ENUM_CRYPT_METHOD method, const uchar data[], const uchar key[], uchar result[]);
 
 enum ENUM_CRYPT_METHOD { CRYPT_BASE64=0, CRYPT_AES128=1, CRYPT_AES256=2, CRYPT_DES=3, CRYPT_HASH_SHA1=4, CRYPT_HASH_SHA256=5, CRYPT_HASH_MD5=6, CRYPT_ARCH_ZIP=7 };
+
+// Economic Calendar functions
+struct MqlCalendarCountry {
+    ulong id;
+    string name;
+    string code;
+    string currency;
+    string currency_symbol;
+    string url_name;
+};
+
+struct MqlCalendarEvent {
+    ulong id;
+    ENUM_CALENDAR_EVENT_TYPE type;
+    ENUM_CALENDAR_EVENT_SECTOR sector;
+    ENUM_CALENDAR_EVENT_FREQUENCY frequency;
+    ENUM_CALENDAR_EVENT_TIMEMODE time_mode;
+    ulong country_id;
+    ENUM_CALENDAR_EVENT_UNIT unit;
+    ENUM_CALENDAR_EVENT_IMPORTANCE importance;
+    ENUM_CALENDAR_EVENT_MULTIPLIER multiplier;
+    uint digits;
+    string source_url;
+    string event_code;
+    string name;
+};
+
+struct MqlCalendarValue {
+    ulong id;
+    ulong event_id;
+    datetime time;
+    datetime period;
+    int revision;
+    long actual_value;
+    long prev_value;
+    long revised_prev_value;
+    long forecast_value;
+    ENUM_CALENDAR_EVENT_IMPACT impact_type;
+};
+
+enum ENUM_CALENDAR_EVENT_TYPE {
+    CALENDAR_TYPE_EVENT=0, CALENDAR_TYPE_INDICATOR=1, CALENDAR_TYPE_HOLIDAY=2
+};
+enum ENUM_CALENDAR_EVENT_SECTOR {
+    CALENDAR_SECTOR_NONE=0, CALENDAR_SECTOR_MARKET=1, CALENDAR_SECTOR_GDP=2, CALENDAR_SECTOR_JOBS=3,
+    CALENDAR_SECTOR_PRICES=4, CALENDAR_SECTOR_MONEY=5, CALENDAR_SECTOR_TRADE=6, CALENDAR_SECTOR_GOVERNMENT=7,
+    CALENDAR_SECTOR_BUSINESS=8, CALENDAR_SECTOR_CONSUMER=9, CALENDAR_SECTOR_HOUSING=10,
+    CALENDAR_SECTOR_TAXES=11, CALENDAR_SECTOR_HOLIDAYS=12
+};
+enum ENUM_CALENDAR_EVENT_FREQUENCY {
+    CALENDAR_FREQUENCY_NONE=0, CALENDAR_FREQUENCY_WEEK=1, CALENDAR_FREQUENCY_MONTH=2,
+    CALENDAR_FREQUENCY_QUARTER=3, CALENDAR_FREQUENCY_YEAR=4, CALENDAR_FREQUENCY_DAY=5
+};
+enum ENUM_CALENDAR_EVENT_TIMEMODE {
+    CALENDAR_TIMEMODE_DATETIME=0, CALENDAR_TIMEMODE_DATE=1, CALENDAR_TIMEMODE_NOTIME=2, CALENDAR_TIMEMODE_TENTATIVE=3
+};
+enum ENUM_CALENDAR_EVENT_UNIT {
+    CALENDAR_UNIT_NONE=0, CALENDAR_UNIT_PERCENT=1, CALENDAR_UNIT_CURRENCY=2, CALENDAR_UNIT_HOUR=3,
+    CALENDAR_UNIT_JOB=4, CALENDAR_UNIT_RIG=5, CALENDAR_UNIT_USD=6, CALENDAR_UNIT_PEOPLE=7,
+    CALENDAR_UNIT_MORTGAGE=8, CALENDAR_UNIT_VOTE=9, CALENDAR_UNIT_BARREL=10, CALENDAR_UNIT_CUBICFEET=11,
+    CALENDAR_UNIT_POSITION=12, CALENDAR_UNIT_BUILDING=13
+};
+enum ENUM_CALENDAR_EVENT_IMPORTANCE {
+    CALENDAR_IMPORTANCE_NONE=0, CALENDAR_IMPORTANCE_LOW=1, CALENDAR_IMPORTANCE_MODERATE=2, CALENDAR_IMPORTANCE_HIGH=3
+};
+enum ENUM_CALENDAR_EVENT_MULTIPLIER {
+    CALENDAR_MULTIPLIER_NONE=0, CALENDAR_MULTIPLIER_THOUSANDS=1, CALENDAR_MULTIPLIER_MILLIONS=2,
+    CALENDAR_MULTIPLIER_BILLIONS=3, CALENDAR_MULTIPLIER_TRILLIONS=4
+};
+enum ENUM_CALENDAR_EVENT_IMPACT {
+    CALENDAR_IMPACT_NA=0, CALENDAR_IMPACT_POSITIVE=1, CALENDAR_IMPACT_NEGATIVE=2
+};
+
+int CalendarCountries(MqlCalendarCountry countries[]);
+bool CalendarCountryById(ulong country_id, MqlCalendarCountry& country);
+int CalendarEventByCountry(string country_code, MqlCalendarEvent events[]);
+int CalendarEventByCurrency(string currency, MqlCalendarEvent events[]);
+bool CalendarEventById(ulong event_id, MqlCalendarEvent& event);
+int CalendarValueById(ulong value_id, MqlCalendarValue& value);
+int CalendarValueHistory(MqlCalendarValue values[], datetime datetime_from, datetime datetime_to = 0, string country_code = "", string currency = "");
+int CalendarValueHistoryByEvent(ulong event_id, MqlCalendarValue values[], datetime datetime_from, datetime datetime_to = 0);
+int CalendarValueLast(ulong& change_id, MqlCalendarValue values[], string country_code = "", string currency = "");
+int CalendarValueLastByEvent(ulong event_id, ulong& change_id, MqlCalendarValue values[]);
 
 // Network functions
 bool SendFTP(string filename, string ftp_path = 0);
