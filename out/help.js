@@ -43,32 +43,43 @@ function openWebHelp(version, keyword) {
  */
 function Help() {
     const editor = vscode.window.activeTextEditor;
-    if (!editor) return undefined;
+    if (!editor) {
+        vscode.window.showWarningMessage('MQL Help: No active editor');
+        return;
+    }
 
     const { document, selection } = editor;
-    const { start, end } = selection;
+    const fileName = document.fileName.toLowerCase();
 
-    if (end.line !== start.line) return undefined;
+    // Check if it's an MQL file
+    const isMQL = fileName.endsWith('.mq4') || fileName.endsWith('.mq5') || fileName.endsWith('.mqh');
+    if (!isMQL) {
+        vscode.window.showInformationMessage('MQL Help: Only available for .mq4, .mq5, .mqh files');
+        return;
+    }
+
+    const { start, end } = selection;
+    if (end.line !== start.line) return;
 
     const isSelectionSearch = end.character !== start.character;
     const wordAtCursorRange = isSelectionSearch
         ? selection
         : document.getWordRangeAtPosition(end, /(#\w+|\w+)/);
 
-    if (!wordAtCursorRange) return undefined;
+    if (!wordAtCursorRange) {
+        vscode.window.showInformationMessage('MQL Help: Place cursor on a keyword');
+        return;
+    }
 
     const keyword = document.getText(wordAtCursorRange);
-    const extension = document.fileName.toLowerCase();
     const wn = vscode.workspace.name ? vscode.workspace.name.includes('MQL4') : false;
 
     // Determine MQL version
     let version;
-    if (extension.endsWith('.mq4') || (extension.endsWith('.mqh') && wn)) {
+    if (fileName.endsWith('.mq4') || (fileName.endsWith('.mqh') && wn)) {
         version = 4;
-    } else if (extension.endsWith('.mq5') || (extension.endsWith('.mqh') && !wn)) {
-        version = 5;
     } else {
-        return undefined;
+        version = 5;
     }
 
     openWebHelp(version, keyword);
