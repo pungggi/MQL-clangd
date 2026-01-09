@@ -348,7 +348,7 @@
             },
             {
                 "command": "mql_tools.configurations",
-                "key": "ctrl+shift+m",
+                "key": "ctrl+alt+m",
                 "when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
             },
             {
