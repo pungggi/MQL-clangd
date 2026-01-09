@@ -98,7 +98,10 @@ function Help() {
     }
 
     const { start, end } = selection;
-    if (end.line !== start.line) return;
+    if (end.line !== start.line) {
+        vscode.window.showInformationMessage('MQL Help: Multi-line selections not supported; place cursor on a single line or select a single word');
+        return;
+    }
 
     const isSelectionSearch = end.character !== start.character;
     const wordAtCursorRange = isSelectionSearch
