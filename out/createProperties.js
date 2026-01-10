@@ -247,6 +247,10 @@ Diagnostics:
     # MQL 'this' keyword usage (MQL allows 'this.' without pointer syntax)
     - err_member_reference_needs_call
     - member_reference_needs_call
+    - expected_arrow_after_this
+    - err_expected_arrow_after_this
+    - extraneous_token_before_semi
+    - expected_semi_after_expr
 
   ClangTidy:
     Remove:

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unpublished
+- **IntelliSense**: Suppress `this.` member access diagnostics - MQL allows `this.member` syntax without pointer semantics.
 - **IntelliSense**: Added function overloads for MQL4 legacy trading functions, series Copy functions, and Object/Chart getter functions for better autocomplete and signature help.
 - **Localization**: Added translations for all VS Code supported languages (zh-cn, zh-tw, fr, de, it, es, ja, ko, pt-br, tr, pl, cs, hu).
 - **Bugfix**: Removed duplicate `-ferror-limit=0` flag from generated `.clangd` config (already present in baseFlags).
