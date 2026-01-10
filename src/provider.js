@@ -327,5 +327,6 @@ module.exports = {
     Hover_MQL,
     ItemProvider,
     HelpProvider,
-    ColorProvider
+    ColorProvider,
+    obj_items
 }

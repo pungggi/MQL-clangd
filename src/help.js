@@ -85,8 +85,19 @@ function openWebHelp(version, keyword) {
 
 /**
  * Main help function - opens web-based MQL documentation
+ * @param {string} [keyword] - Optional keyword to search for (used by quickfixes)
+ * @param {number} [version] - Optional MQL version (4 or 5, defaults to auto-detect)
  */
-function Help() {
+function Help(keyword, version) {
+    // If keyword is provided (called from quickfix), use it directly
+    if (keyword) {
+        // Default to MQL5 if version not specified
+        const mqlVersion = version || 5;
+        openWebHelp(mqlVersion, keyword);
+        return;
+    }
+
+    // Original cursor-based help logic
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
         vscode.window.showWarningMessage('MQL Help: No active editor');
@@ -119,18 +130,18 @@ function Help() {
         return;
     }
 
-    const keyword = document.getText(wordAtCursorRange);
+    const cursorKeyword = document.getText(wordAtCursorRange);
     const wn = vscode.workspace.name ? vscode.workspace.name.includes('MQL4') : false;
 
     // Determine MQL version
-    let version;
+    let detectedVersion;
     if (fileName.endsWith('.mq4') || (fileName.endsWith('.mqh') && wn)) {
-        version = 4;
+        detectedVersion = 4;
     } else {
-        version = 5;
+        detectedVersion = 5;
     }
 
-    openWebHelp(version, keyword);
+    openWebHelp(detectedVersion, cursorKeyword);
 }
 
 /**

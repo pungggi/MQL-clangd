@@ -1,13 +1,36 @@
 # Changelog
 
-## Unpublished
-- **IntelliSense**: Suppress `this.` member access diagnostics - MQL allows `this.member` syntax without pointer semantics.
-- **IntelliSense**: Added function overloads for MQL4 legacy trading functions, series Copy functions, and Object/Chart getter functions for better autocomplete and signature help.
-- **IntelliSense**: Added missing MQL5 constants and functions - extended `ENUM_DEAL_REASON` values, Database/SQLite API, and Economic Calendar API.
+## 1.0.9
+
+### QuickFixes
+- **Spelling Suggestions**: Detects misspelled MQL function names and offers "Did you mean 'X'?" fixes.
+- **Open Documentation**: Error 199 (wrong parameters count) - opens MQL5 docs for the function.
+- **Declare Variable**: Error 256 (undeclared identifier) - offers to declare as input parameter or local variable.
+- **Add Return Statement**: Errors 117/121 (missing return) - inserts appropriate return statement.
+- **Entry Point Skeletons**: Errors 209/356 (missing entry point) - inserts OnCalculate/OnTick/OnStart templates.
+- **Enum Suggestions**: Error 262 (cannot convert to enum) - suggests common enum values for indicator/trading functions.
+- **Include Fix**: clangd "unknown type name" - adds `#ifdef __clang__` include directive.
+
+### IntelliSense
+- Suppress `this.` member access diagnostics - MQL allows `this.member` syntax without pointer semantics.
+- Added function overloads for MQL4 legacy trading functions, series Copy functions, and Object/Chart getter functions.
+- Added missing MQL5 constants and functions - extended `ENUM_DEAL_REASON` values, Database/SQLite API, and Economic Calendar API.
+
+### Snippets
+- Added 20+ MQL5 code snippets for common patterns:
+  - Event handlers: `OnInit`, `OnDeinit`, `OnTick`, `OnStart`, `OnCalculate`, `OnTimer`, `OnChartEvent`, `OnTrade`, `OnTradeTransaction`
+  - Trading: `OrderSend` with `MqlTradeRequest`, indicator handle creation
+  - Data: `CopyRates`/`CopyBuffer` with error handling
+  - Declarations: input parameters, properties, classes, enums, comments
+
+### Configuration
+- **Improved clangd config**: Better organized suppressions by category with explanatory comments.
 - **Diagnostics**: Clickable error codes in Problems panel now link to MQL5 documentation.
 - **Localization**: Added translations for all VS Code supported languages (zh-cn, zh-tw, fr, de, it, es, ja, ko, pt-br, tr, pl, cs, hu).
-- **Bugfix**: Removed duplicate `-ferror-limit=0` flag from generated `.clangd` config (already present in baseFlags).
-- **Bugfix**: Fixed MQL4/MQL5 version define handling in mixed workspaces - version defines are now set per-file based on extension.
+
+### Bugfixes
+- Removed duplicate `-ferror-limit=0` flag from generated `.clangd` config.
+- Fixed MQL4/MQL5 version define handling in mixed workspaces - version defines are now set per-file based on extension.
 
 ## 1.0.8
 - **Keyboard Shortcuts**: Added keyboard shortcuts for common commands:

@@ -2,7 +2,7 @@
     "name": "mql-clangd",
     "displayName": "MQL Clangd",
     "description": "High-performance MQL4/MQL5 tools with Clangd support. Fork of MQL Tools by L-I-V.",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "publisher": "ngsoftware",
     "engines": {
         "vscode": "^1.75.0"
@@ -105,6 +105,18 @@
                     "type": "boolean",
                     "default": true,
                     "description": "%mql_tools.configuration.CloseME.description%"
+                },
+                "mql_tools.AutoCheck.Enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Automatically run syntax check after you stop typing (debounced)."
+                },
+                "mql_tools.AutoCheck.Delay": {
+                    "type": "number",
+                    "default": 3000,
+                    "minimum": 1000,
+                    "maximum": 30000,
+                    "description": "Delay in milliseconds before auto-check runs after typing stops (default: 3000ms)."
                 },
                 "mql_tools.Help.HelpON": {
                     "type": "boolean",
