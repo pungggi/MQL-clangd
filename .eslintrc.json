@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": false,
+        "commonjs": true,
+        "es2021": true,
+        "node": true,
+        "mocha": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "no-unused-vars": "warn",
+        "no-console": "off",
+        "semi": "off",
+        "quotes": "off",
+        "no-empty": "warn",
+        "no-useless-escape": "warn",
+        "no-cond-assign": "warn",
+        "no-regex-spaces": "warn"
+    },
+    "ignorePatterns": [
+        "node_modules/",
+        "files/",
+        "*.min.js"
+    ]
+}
