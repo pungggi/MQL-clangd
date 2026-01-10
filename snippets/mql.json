@@ -230,7 +230,6 @@
             "#property copyright \"${1:Copyright}\"",
             "#property link      \"${2:https://}\"",
             "#property version   \"${3:1.00}\"",
-            "#property strict",
             "$0"
         ],
         "description": "EA property declarations"
