@@ -21,7 +21,7 @@ const REG_LINE_FRAGMENT = /\((?=(\d+,\d+).$)/gm;
 const language = vscode.env.language;
 
 const diagnosticCollection = vscode.languages.createDiagnosticCollection('mql');
-const { Help, OfflineHelp } = require("./help");
+const { Help, OfflineHelp, getMql5DocLang } = require("./help");
 const { ShowFiles, InsertNameFileMQH, InsertMQH, InsertNameFileMQL, InsertMQL, InsertResource, InsertImport, InsertTime, InsertIcon, OpenFileInMetaEditor, CreateComment } = require("./contextMenu");
 const { IconsInstallation } = require("./addIcon");
 const { Hover_log, DefinitionProvider, Hover_MQL, ItemProvider, HelpProvider, ColorProvider } = require("./provider");
@@ -148,7 +148,17 @@ function Compile(rt) {
                         const diagsByFile = {};
                         log.diagnostics.forEach(d => {
                             if (!diagsByFile[d.file]) diagsByFile[d.file] = [];
-                            diagsByFile[d.file].push(new vscode.Diagnostic(d.range, d.message, d.severity));
+                            const diag = new vscode.Diagnostic(d.range, d.message, d.severity);
+
+                            // Add error code with link to MQL5 documentation
+                            if (d.errorCode) {
+                                diag.code = {
+                                    value: `MQL${d.errorCode}`,
+                                    target: vscode.Uri.parse(`https://www.mql5.com/${getMql5DocLang()}/docs/basis/errors/compilationerrors`)
+                                };
+                            }
+
+                            diagsByFile[d.file].push(diag);
                         });
                         for (const file in diagsByFile) {
                             diagnosticCollection.set(vscode.Uri.file(file), diagsByFile[file]);
@@ -267,7 +277,8 @@ function replaceLog(str, f) {
                             file: fullPath,
                             range: new vscode.Range(line, col, line, col + 1),
                             message: name_res,
-                            severity: severity
+                            severity: severity,
+                            errorCode: gh  // Include error code for documentation link
                         });
 
                         const linePos = link_res.match(REG_LINE_POS);

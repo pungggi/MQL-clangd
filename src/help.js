@@ -8,20 +8,24 @@ const language = vscode.env.language;
 const platform = process.platform; // 'win32', 'darwin', 'linux'
 
 // Map VS Code language codes to MQL5 web URL language codes
+// MQL5 documentation supports: en, ru, zh, ja, es, de (and partial support for others)
 const webLangMap = {
     'en': 'en',
     'ru': 'ru',
     'de': 'de',
     'es': 'es',
-    'fr': 'fr',
     'zh-cn': 'zh',
     'zh-tw': 'zh',
-    'it': 'it',
-    'ja': 'ja',
-    'ko': 'ko',
-    'pt-br': 'pt',
-    'tr': 'tr'
+    'ja': 'ja'
 };
+
+/**
+ * Get the MQL5 documentation language code for the current VS Code language
+ * @returns {string} MQL5 documentation language code (defaults to 'en')
+ */
+function getMql5DocLang() {
+    return webLangMap[language] || 'en';
+}
 
 // Load MQL5 docs mapping
 let mql5DocsMap = null;
@@ -47,7 +51,7 @@ function loadMql5DocsMap() {
  * @param {string} keyword - Keyword to search for
  */
 function openWebHelp(version, keyword) {
-    const webLang = webLangMap[language] || 'en';
+    const webLang = getMql5DocLang();
     let helpUrl;
 
     if (version === 4) {
@@ -277,5 +281,6 @@ function OfflineHelp() {
 
 module.exports = {
     Help,
-    OfflineHelp
+    OfflineHelp,
+    getMql5DocLang
 }
