@@ -1,4 +1,6 @@
 > **Note**: This is a fork of the [MQL Tools](https://github.com/L-I-V/MQL-Tools) by **L-I-V**. This edition adds **clangd** support and significant performance optimizations.
+>
+> 📋 **[View Changelog](CHANGELOG.md)** for the latest updates and improvements.
 
 ---
 
