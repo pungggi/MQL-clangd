@@ -1,5 +1,8 @@
 # Changelog
 
+## Unpublished
+- **Localization**: Added translations for all VS Code supported languages (Chinese Simplified, Chinese Traditional, French, German, Italian, Spanish, Japanese, Korean, Portuguese-Brazil, Turkish, Polish, Czech, Hungarian).
+
 ## 1.0.8
 - **Keyboard Shortcuts**: Added keyboard shortcuts for common commands:
   - `Ctrl+Alt+M`: Create MQL configuration
