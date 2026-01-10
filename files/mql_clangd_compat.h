@@ -778,6 +778,11 @@ int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, int start_pos, int coun
 int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, int count, int spread_array[]);
 int CopySpread(string symbol, ENUM_TIMEFRAMES timeframe, datetime start_time, datetime stop_time, int spread_array[]);
 
+// CopyBuffer - 3 overloads
+int CopyBuffer(int indicator_handle, int buffer_num, int start_pos, int count, double buffer[]);
+int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, int count, double buffer[]);
+int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, datetime stop_time, double buffer[]);
+
 int CopyTicks(string symbol, MqlTick ticks_array[], uint flags = COPY_TICKS_ALL, ulong from = 0, uint count = 0);
 int CopyTicksRange(string symbol, MqlTick ticks_array[], uint flags, ulong from_msc, ulong to_msc);
 
@@ -1071,11 +1076,6 @@ int iTriX(string symbol, ENUM_TIMEFRAMES period, int ma_period, ENUM_APPLIED_PRI
 int iVIDyA(string symbol, ENUM_TIMEFRAMES period, int cmo_period, int ema_period, int ma_shift, ENUM_APPLIED_PRICE applied_price);
 int iVolumes(string symbol, ENUM_TIMEFRAMES period, ENUM_APPLIED_VOLUME applied_volume);
 int iWPR(string symbol, ENUM_TIMEFRAMES period, int calc_period);
-
-// CopyBuffer - 3 overloads
-int CopyBuffer(int indicator_handle, int buffer_num, int start_pos, int count, double buffer[]);
-int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, int count, double buffer[]);
-int CopyBuffer(int indicator_handle, int buffer_num, datetime start_time, datetime stop_time, double buffer[]);
 
 bool IndicatorSetDouble(int prop_id, double prop_value);
 bool IndicatorSetDouble(int prop_id, int prop_modifier, double prop_value);
