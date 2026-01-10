@@ -11,7 +11,6 @@
     "mql_tools.configuration.MiniME.description": "启动后最小化 MetaEditor（脚本）",
     "mql_tools.configuration.Timetomini.description": "从启动到最小化 MetaEditor 的时间（毫秒）（脚本）",
     "mql_tools.configuration.CloseME.description": "编译后关闭 MetaEditor（脚本）\n如果启用此参数，使用脚本的编译时间将增加2倍。",
-    "mql_tools.configuration.HelpON.description": "按 Shift+F1 打开 MQL4/MQL5 网页文档",
     "mql_tools.configuration.ForcedIncludes.description": "强制包含到 clangd 分析的额外头文件（例如 [\"Include/JAson.mqh\"] 用于第三方库）",
     "mql_tools.configuration.context": "请勿禁用！",
     "mql_tools.commands.compileFile.title": "编译 MQL 文件",
@@ -31,4 +30,3 @@
     "mql_tools.commands.openInME.title": "在 'MetaEditor' 中打开",
     "mql_tools.commands.createCommentary.title": "创建函数注释"
 }
-

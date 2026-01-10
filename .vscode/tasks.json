@@ -17,33 +17,9 @@
             }
         },
         {
-            "label": "Set PATs",
-            "type": "shell",
-            "command": "node .vscode/pat.js set",
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": false
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Restore PATs",
-            "type": "shell",
-            "command": "node .vscode/pat.js restore",
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": false
-            },
-            "problemMatcher": []
-        },
-        {
             "label": "VSCE Publish",
             "type": "shell",
-            "command": "npx vsce publish --pat VSCE_PAT",
+            "command": "node scripts/publish.js vsce",
             "presentation": {
                 "reveal": "always",
                 "panel": "shared",
@@ -55,7 +31,7 @@
         {
             "label": "OVSX Publish",
             "type": "shell",
-            "command": "npx ovsx publish --pat OVSX_PAT",
+            "command": "node scripts/publish.js ovsx",
             "presentation": {
                 "reveal": "always",
                 "panel": "shared",

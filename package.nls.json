@@ -11,7 +11,6 @@
     "mql_tools.configuration.MiniME.description": "Minimize MetaEditor after launch. (Script)",
     "mql_tools.configuration.Timetomini.description": "Time from start to minimize MetaEditor in milliseconds. (Script)",
     "mql_tools.configuration.CloseME.description": "Close MetaEditor after compilation. (Script) \nIf this parameter is turned on, then the compilation time using the script is increased by 2 times.",
-    "mql_tools.configuration.HelpON.description": "Open web-based MQL4/MQL5 documentation on Shift+F1",
     "mql_tools.configuration.context": "Do not disable!",
     "mql_tools.commands.compileFile.title": "Compile MQL file",
     "mql_tools.commands.checkFile.title": "Check MQL syntax",
