@@ -18,4 +18,3 @@
 - **Centralized Diagnostics**: Compiler errors and warnings now appear directly in the VS Code **Problems** tab.
 - **Improved UI Responsiveness**: Optimized color providers and completion items to prevent high CPU load on large documents.
 - **Reliability**: Added a Mocha unit testing suite for core logic.
-- Switched C++ IntelliSense engine from Microsoft C/C++ to clangd for improved performance and accuracy.
