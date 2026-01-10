@@ -243,7 +243,7 @@ Diagnostics:
 
 CompileFlags:
   Add:
-    - -ferror-limit=0
+    # Suppress all warnings in .clangd config; targeted -Wno-* flags are already set in baseFlags
     - -Wno-everything
 `;
         await fs.promises.writeFile(clangdConfigPath, clangdConfig, 'utf8');

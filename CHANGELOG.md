@@ -1,5 +1,9 @@
 # Changelog
 
+## Unpublished
+- **Localization**: Added translations for all VS Code supported languages (zh-cn, zh-tw, fr, de, it, es, ja, ko, pt-br, tr, pl, cs, hu).
+- **Bugfix**: Removed duplicate `-ferror-limit=0` flag from generated `.clangd` config (already present in baseFlags).
+
 ## 1.0.0
 - **Major Architecture Shift**: Migrated from Microsoft C/C++ to **clangd** for superior MQL intellisense and performance.
 - **Performance Overhaul**: Converted blocking synchronous I/O to asynchronous operations across the extension.
