@@ -109,8 +109,6 @@ async function CreateProperties() {
     if (workspaceName.toUpperCase().includes('MQL4') || workspacepath.toUpperCase().includes('MQL4')) {
         incDir = configMql.Metaeditor.Include4Dir;
         CommI = lg['path_include_4'] || 'Include path';
-        const mql5Idx = baseFlags.indexOf('-D__MQL5__');
-        if (mql5Idx !== -1) baseFlags[mql5Idx] = '-D__MQL4__';
     } else {
         incDir = configMql.Metaeditor.Include5Dir;
         CommI = lg['path_include_5'] || 'Include path';
