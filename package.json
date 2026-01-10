@@ -147,6 +147,12 @@
                 "path": "./syntaxes/mql.out.tmLanguage"
             }
         ],
+        "snippets": [
+            {
+                "language": "cpp",
+                "path": "./snippets/mql.json"
+            }
+        ],
         "commands": [
             {
                 "command": "mql_tools.compileScript",

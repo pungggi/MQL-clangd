@@ -14,6 +14,7 @@
 ## 1.0.7
 - **MQL5 Help**: Direct links to online documentation pages in the language of the user's VS Code.
 - **Offline Help**: New command `MQL: Get the MQL4/MQL5 offline help` opens local CHM files from MetaTrader Terminal with keyword anchor (Windows/macOS/Linux). No help files are shipped with the extension.
+
 ## 1.0.0
 - **Major Architecture Shift**: Migrated from Microsoft C/C++ to **clangd** for superior MQL intellisense and performance.
 - **Performance Overhaul**: Converted blocking synchronous I/O to asynchronous operations across the extension.
