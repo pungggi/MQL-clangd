@@ -13,8 +13,8 @@ Module._load = function (request, parent, isMain) {
 };
 
 // 2. Load the modules under test (they will now get the mock)
-const { replaceLog } = require('../../out/extension');
-const { normalizePath } = require('../../out/createProperties');
+const { replaceLog } = require('../../src/extension');
+const { normalizePath } = require('../../src/createProperties');
 
 suite('Core Logic Unit Tests (Independent)', () => {
 

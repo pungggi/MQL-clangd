@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { normalizePath } = require('../../out/createProperties');
+const { normalizePath } = require('../../src/createProperties');
 
 suite('Pure Logic Unit Tests', () => {
     test('Path Normalization', () => {
