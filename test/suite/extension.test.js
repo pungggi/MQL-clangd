@@ -1,11 +1,10 @@
 const assert = require('assert');
-const path = require('path');
 const Module = require('module');
 
 // 1. Hook the Node.js module loader to intercept 'vscode'
 const vscodeMock = require('../mocks/vscode');
 const originalLoad = Module._load;
-Module._load = function (request, parent, isMain) {
+Module._load = function (request) {
     if (request === 'vscode') {
         return vscodeMock;
     }

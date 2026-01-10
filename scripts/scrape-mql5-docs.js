@@ -35,7 +35,7 @@ function fetchPage(url) {
 function extractLinks(html) {
     const links = [];
     // Match all documentation links: /en/docs/...
-    const regex = /href="(\/en\/docs\/[a-z0-9_\/]+)"/gi;
+    const regex = /href="(\/en\/docs\/[a-z0-9_/]+)"/gi;
     let match;
     while ((match = regex.exec(html)) !== null) {
         const link = match[1].toLowerCase();

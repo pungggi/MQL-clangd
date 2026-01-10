@@ -16,7 +16,7 @@ const REG_RESULT_SHORT = /\d+.error.+/;
 const REG_LINE_PATH = /([a-zA-Z]:\\.+(?= :)|^\(\d+,\d+\))(?:.: )(.+)/;
 const REG_ERROR_CODE = /(?<=error |warning )\d+/;
 const REG_FULL_PATH = /[a-z]:\\.+/gi;
-const REG_LINE_POS = /\((?:\d+\,\d+)\)$/gm;
+const REG_LINE_POS = /\((?:\d+,\d+)\)$/gm;
 const REG_LINE_FRAGMENT = /\((?=(\d+,\d+).$)/gm;
 const language = vscode.env.language;
 
@@ -467,8 +467,11 @@ function FindParentFile() {
 
         let NameFileMQL, match, regEx = new RegExp('(\\/\\/###<).+(mq[4|5]>)', 'ig');
 
-        while (match = regEx.exec(document.lineAt(0).text))
+        match = regEx.exec(document.lineAt(0).text);
+        while (match) {
             NameFileMQL = match[0];
+            match = regEx.exec(document.lineAt(0).text);
+        }
 
         if (NameFileMQL != undefined)
             NameFileMQL = pathModule.join(workspacepath, String(NameFileMQL.match(/(?<=<).+(?=>)/)));

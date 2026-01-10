@@ -82,7 +82,7 @@ function Hover_MQL() {
                 `<span style="color:#ffd700e6;">${description.replace(rex, '$3')}</span><span>${description.replace(rex, '$4')}</span><hr>\n\n`);
 
             (obj_items[word].parameters[loclang] ? obj_items[word].parameters[loclang] : obj_items[word].parameters.en).forEach(function (item) {
-                const re = /(.+?(?=  ))(.+)/;
+                const re = /(.+?(?= {2}))(.+)/;
                 contents.appendMarkdown(' `' + item.replace(re, '$1') + '` -' + item.replace(re, '$2') + '<br>\n');
             });
 
@@ -176,7 +176,7 @@ function HelpProvider() {
                         var xc = /(?:.*\s)(.+)/g.exec(item)[1];
                     else xc = item;
                     const npt = xc,
-                        reg = /((?:^\w+|^\w+\[\])(?=\s))+(?:  )(.+)/m,
+                        reg = /((?:^\w+|^\w+\[\])(?=\s))+(?= {2})(.+)/m,
                         prm = paramDescription.find(name =>
                             (reg.exec(name) !== null ? reg.exec(name)[1] : '') == npt
                         ),
@@ -218,19 +218,23 @@ function ColorProvider() {
                     const colorName = match[0];
                     let clrRGB, hx, lr, lx;
 
-                    if (hx = colorName.match(/\b0x(?:[A-Fa-f0-9]{2})?(?:[A-Fa-f0-9]{6})\b/)) {
+                    hx = colorName.match(/\b0x(?:[A-Fa-f0-9]{2})?(?:[A-Fa-f0-9]{6})\b/);
+                    if (hx) {
                         clrRGB = hexToRgbA(hx[0]);
                     }
 
                     else if (colorName.includes(`C'`)) {
-                        if (lr = colorName.match(/(?<=C')\d{1,3},\d{1,3},\d{1,3}(?=')/)) {
+                        lr = colorName.match(/(?<=C')\d{1,3},\d{1,3},\d{1,3}(?=')/);
+                        if (lr) {
                             clrRGB = lr[0].split(',');
                             clrRGB.push(255);
                         }
-
-                        else if (lx = colorName.match(/(?<=C')0x[A-Fa-f0-9]{2},0x[A-Fa-f0-9]{2},0x[A-Fa-f0-9]{2}(?=')/)) {
-                            clrRGB = lx[0].split(',').map(m => parseInt(m));
-                            clrRGB.push(255);
+                        else {
+                            lx = colorName.match(/(?<=C')0x[A-Fa-f0-9]{2},0x[A-Fa-f0-9]{2},0x[A-Fa-f0-9]{2}(?=')/);
+                            if (lx) {
+                                clrRGB = lx[0].split(',').map(m => parseInt(m));
+                                clrRGB.push(255);
+                            }
                         }
                     }
 

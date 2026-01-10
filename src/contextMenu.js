@@ -33,7 +33,7 @@ function InsertIcon() {
                 d = selection.start.line, ns = document.lineAt(d).text.length, pos = new vscode.Position(d, ns),
                 str = RelativePath.replace(/\//g, '\\\\');
 
-            edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#property icon ' + '\"\\\\' + str + '\"'));
+            edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#property icon ' + '"\\\\' + str + '"'));
         }
     });
 }
@@ -89,7 +89,7 @@ function InsertNameFileMQH(uri) {
     if (['.mq4', '.mq5', '.mqh'].includes(extension)) {
         const dirName = pathModule.dirname(Path), Ye = NName.includes(Path.match(/.*\\(?=(?:(?:(?:.+)\.(?:\w+))$))/m)[0]) ? 1 : 0,
             str = Ye ? NName.slice(dirName.length + 1) : RelativePath.replace(/(^include\/)(.+)/im, "$2");
-        edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#include ' + (Ye === 1 ? '\"' : '<') + str + (Ye === 1 ? '\"' : '>')));
+        edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#include ' + (Ye === 1 ? '"' : '<') + str + (Ye === 1 ? '"' : '>')));
     }
 }
 
@@ -110,7 +110,7 @@ function InsertResource() {
                 d = selection.start.line, ns = document.lineAt(d).text.length, pos = new vscode.Position(d, ns),
                 str = RelativePath.replace(/\//g, '\\\\');
 
-            edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#resource ' + '\"\\\\' + str + '\"'));
+            edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#resource ' + '"\\\\' + str + '"'));
         }
     });
 }
@@ -133,11 +133,11 @@ function InsertImport() {
                 d = selection.start.line, ns = document.lineAt(d).text.length, pos = new vscode.Position(d, ns);
 
             if (extfile === '.dll')
-                edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#import ' + '\"' + fileName + '\"' + '\n\n#import'));
+                edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#import ' + '"' + fileName + '"' + '\n\n#import'));
             if (extfile === '.ex5') {
                 const dirName = pathModule.dirname(Path), Ye = NName.includes(Path.match(/.*\\(?=(?:(?:(?:.+)\.(?:\w+))$))/m)[0]) ? 1 : 0,
                     str = Ye ? NName.slice(dirName.length + 1) : (RelativePath.search(/^Libraries/) != -1 ? RelativePath.match(/(?<=Libraries\/).+/gi) : '..\\..\\..\\' + RelativePath).replace(/\//g, '\\');
-                edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#import ' + '\"' + str + '\"' + '\n\n#import'));
+                edit(edit => edit.insert(pos, (ns > 0 ? '\n' : '') + '#import ' + '"' + str + '"' + '\n\n#import'));
             }
         }
     });
@@ -162,11 +162,15 @@ function CreateComment() {
         regEx = new RegExp(`${snip.replace('(', '\\(')}([\\s+\\n+\\w+&\\[\\]\\,=]*)\\)(?:(?:(?:\\s+|\\n)|)\\/\\*(?:.|\\n)*\\*\\/|(?:\\s+|)\\/\\/.*|)(?:\\{|\\s+\\{)`);
     let a, args;
 
-    if (args = document.getText().match(regEx)) {
+    args = document.getText().match(regEx);
+    if (args) {
         const space = ''.padEnd(wordAtCursorRange.start.character, ' ');
         let comment = space + '/**\n', type;
         comment += space + ' * ' + ext.lg['comm_func'] + '\n';
-        args[1].replace(/\s+/g, ' ').trim().split(',').forEach((item, index) => { if (a = item.match(/(?<= )(?:[\w&\[\]=]+)$/, 'g')) comment += `${space} * @param  ${a[0]}: ${ext.lg['comm_arg']} ${index + 1}\n` });
+        args[1].replace(/\s+/g, ' ').trim().split(',').forEach((item, index) => {
+            a = item.match(/(?<= )(?:[\w&[\]=]+)$/, 'g');
+            if (a) comment += `${space} * @param  ${a[0]}: ${ext.lg['comm_arg']} ${index + 1}\n`;
+        });
         if ((type = snip.match(reg)[1]) != 'void') comment += `${space} * @return ( ${type} )\n`;
         comment += space + ' */\n';
 

@@ -27,7 +27,9 @@ async function AddIcon(
             .map((d) => d.name)
             .filter(name => name.includes(FullNameExt))
             .join();
-    } catch (err) { }
+    } catch (err) {
+        // Ignore error if directory doesn't exist
+    }
 
     try {
         vscode.extensions.getExtension(FullNameExt).extensionPath;

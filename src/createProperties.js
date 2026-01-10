@@ -191,14 +191,6 @@ async function CreateProperties() {
 
     const config = vscode.workspace.getConfiguration();
     const configMql = vscode.workspace.getConfiguration('mql_tools');
-    const language = vscode.env.language;
-
-    let lg;
-    try {
-        lg = require(`../landes.${language}.json`);
-    } catch (e) {
-        lg = require('../landes.json');
-    }
 
     const editor = vscode.window.activeTextEditor;
     const workspaceFolder = (editor && vscode.workspace.getWorkspaceFolder(editor.document.uri))
@@ -234,13 +226,11 @@ async function CreateProperties() {
         `-I${normalizePath(incPath)}`
     ];
 
-    let incDir, CommI;
+    let incDir;
     if (workspaceName.toUpperCase().includes('MQL4') || workspacepath.toUpperCase().includes('MQL4')) {
         incDir = configMql.Metaeditor.Include4Dir;
-        CommI = lg['path_include_4'] || 'Include path';
     } else {
         incDir = configMql.Metaeditor.Include5Dir;
-        CommI = lg['path_include_5'] || 'Include path';
     }
 
     const arrPath = [...baseFlags];
