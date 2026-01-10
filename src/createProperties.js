@@ -5,11 +5,140 @@ const pathModule = require('path');
 
 /**
  * Normalizes paths for clangd (forward slashes).
- * @param {string} p 
+ * @param {string} p
  */
 function normalizePath(p) {
     if (!p) return '';
     return p.replace(/\\/g, '/');
+}
+
+/**
+ * Checks if a file extension is a valid MQL source extension.
+ * Source extensions are .mq4, .mq5, and .mqh.
+ * Compiled extensions (.ex4, .ex5) are NOT source extensions.
+ * @param {string} ext - The file extension to check (e.g., '.mq4')
+ * @returns {boolean} - True if it's a source extension, false otherwise
+ */
+function isSourceExtension(ext) {
+    if (!ext) return false;
+    const normalized = ext.toLowerCase();
+    return ['.mq4', '.mq5', '.mqh'].includes(normalized);
+}
+
+/**
+ * Generates an include flag for the compiler.
+ * Uses normalized forward-slash paths for clangd compatibility.
+ * @param {string} includePath - The include path
+ * @returns {string} - The include flag (e.g., '-I/path/to/include')
+ */
+function generateIncludeFlag(includePath) {
+    const normalized = normalizePath(includePath);
+    return `-I${normalized}`;
+}
+
+/**
+ * Generates the base compiler flags for clangd.
+ * These are pure flags without path-dependent includes.
+ * @param {Object} options - Optional configuration
+ * @param {string} [options.compatHeaderPath] - Path to compatibility header
+ * @param {string} [options.workspacePath] - Workspace path for include
+ * @param {string} [options.includePath] - Include directory path
+ * @returns {string[]} - Array of base compiler flags
+ */
+function generateBaseFlags(options = {}) {
+    const flags = [
+        '-xc++',
+        '-std=c++17',
+        '-D__MQL__',
+        '-D__MQL5__',
+        '-fms-extensions',
+        '-fms-compatibility',
+        '-ferror-limit=0',
+        '-Wno-invalid-token-paste',
+        '-Wno-unused-value',
+        '-Wno-unknown-pragmas',
+        '-Wno-writable-strings',
+        '-Xclang', '-Wno-invalid-pp-directive',
+        '-Wno-unknown-directives',
+        '-Wno-language-extension-token'
+    ];
+
+    // Add optional path-dependent flags
+    if (options.compatHeaderPath) {
+        flags.splice(4, 0, `-include${options.compatHeaderPath}`);
+    }
+    if (options.workspacePath) {
+        flags.push(`-I${normalizePath(options.workspacePath)}`);
+    }
+    if (options.includePath) {
+        flags.push(`-I${normalizePath(options.includePath)}`);
+    }
+
+    return flags;
+}
+
+/**
+ * Generates project-specific flags based on MQL version.
+ * Transforms base flags for MQL4 projects (replaces __MQL5__ with __MQL4__).
+ * @param {'mql4' | 'mql5'} projectType - The project type
+ * @param {string[]} baseFlags - The base flags to transform
+ * @returns {string[]} - Array of project-specific flags
+ */
+function generateProjectFlags(projectType, baseFlags) {
+    const flags = [...baseFlags];
+
+    if (projectType === 'mql4') {
+        // Replace -D__MQL5__ with -D__MQL4__
+        const mql5Index = flags.indexOf('-D__MQL5__');
+        if (mql5Index !== -1) {
+            flags[mql5Index] = '-D__MQL4__';
+        }
+        // Add MQL4-specific build flag
+        flags.push('-D__MQL4_BUILD__');
+    } else if (projectType === 'mql5') {
+        // Add MQL5-specific build flag
+        flags.push('-D__MQL5_BUILD__');
+    }
+
+    return flags;
+}
+
+/**
+ * Detects the MQL version based on folder path and/or file extension.
+ * Priority: file extension > folder path.
+ * @param {string} folderPath - The folder path to check (optional)
+ * @param {string} fileName - The file name to check (optional)
+ * @returns {'mql4' | 'mql5' | null} - The detected MQL version or null if not determinable
+ */
+function detectMqlVersion(folderPath, fileName) {
+    // Check file extension first (higher priority)
+    if (fileName) {
+        const ext = fileName.toLowerCase();
+        if (ext.endsWith('.mq4')) {
+            return 'mql4';
+        }
+        if (ext.endsWith('.mq5')) {
+            return 'mql5';
+        }
+    }
+
+    // Check folder path
+    if (folderPath) {
+        const upperPath = folderPath.toUpperCase();
+        if (upperPath.includes('MQL4')) {
+            return 'mql4';
+        }
+        if (upperPath.includes('MQL5')) {
+            return 'mql5';
+        }
+    }
+
+    // Default to mql5 if we have a path but can't determine version
+    if (folderPath || fileName) {
+        return 'mql5';
+    }
+
+    return null;
 }
 
 /**
@@ -320,5 +449,10 @@ function Cpp_prop(incDir) {
 module.exports = {
     CreateProperties,
     Cpp_prop,
-    normalizePath
+    normalizePath,
+    isSourceExtension,
+    detectMqlVersion,
+    generateIncludeFlag,
+    generateBaseFlags,
+    generateProjectFlags
 };

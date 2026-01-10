@@ -1,4 +1,6 @@
 // Mock for vscode API
+const path = require('path');
+
 class Range {
     constructor(startLine, startChar, endLine, endChar) {
         this.start = { line: startLine, character: startChar };
@@ -69,7 +71,10 @@ module.exports = {
     Uri: {
         file: (path) => ({ fsPath: path, path: path }),
         parse: (path) => ({ fsPath: path, path: path }),
-        joinPath: (base, ...segments) => ({ fsPath: [base.fsPath, ...segments].join('/') })
+        joinPath: (base, ...segments) => {
+            const joined = path.join(base.fsPath, ...segments);
+            return { fsPath: joined, path: joined };
+        }
     },
     languages: {
         createDiagnosticCollection: () => ({
