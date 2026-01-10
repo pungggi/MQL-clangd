@@ -3,6 +3,7 @@
 ## Unpublished
 - **Localization**: Added translations for all VS Code supported languages (zh-cn, zh-tw, fr, de, it, es, ja, ko, pt-br, tr, pl, cs, hu).
 - **Bugfix**: Removed duplicate `-ferror-limit=0` flag from generated `.clangd` config (already present in baseFlags).
+- **Bugfix**: Fixed MQL4/MQL5 version define handling in mixed workspaces - version defines are now set per-file based on extension.
 
 ## 1.0.8
 - **Keyboard Shortcuts**: Added keyboard shortcuts for common commands:
