@@ -1,8 +1,10 @@
-> **Note**: This is a fork of the original [MQL Tools](https://github.com/L-I-V/MQL-Tools) by **L-I-V**. This edition adds **clangd** support and significant performance optimizations.
+> **Note**: This is a fork of the [MQL Tools](https://github.com/L-I-V/MQL-Tools) by **L-I-V**. This edition adds **clangd** support and significant performance optimizations.
+>
+> 📋 **[View Changelog](CHANGELOG.md)** for the latest updates and improvements.
 
 ---
 
-### 🔄 Differences from original MQL Tools
+### 🔄 Differences from MQL Tools
 
 | Feature | MQL Tools | MQL Clangd |
 |---------|-----------|------------|
@@ -11,7 +13,8 @@
 | `compile_commands.json` | ❌ | ✅ |
 | Diagnostics in Problems tab | ❌ | ✅ |
 | Multi-root workspace support | ❌ | ✅ |
-| Unit tests | ❌ | ✅ |
+| Direct MQL5 doc links | ❌ | ✅ |
+| Offline CHM help | ❌ | ✅ |
 
 ---
 
