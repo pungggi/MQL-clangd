@@ -21,7 +21,7 @@ const REG_LINE_FRAGMENT = /\((?=(\d+,\d+).$)/gm;
 const language = vscode.env.language;
 
 const diagnosticCollection = vscode.languages.createDiagnosticCollection('mql');
-const { Help } = require("./help");
+const { Help, OfflineHelp } = require("./help");
 const { ShowFiles, InsertNameFileMQH, InsertMQH, InsertNameFileMQL, InsertMQL, InsertResource, InsertImport, InsertTime, InsertIcon, OpenFileInMetaEditor, CreateComment } = require("./contextMenu");
 const { IconsInstallation } = require("./addIcon");
 const { Hover_log, DefinitionProvider, Hover_MQL, ItemProvider, HelpProvider, ColorProvider } = require("./provider");
@@ -45,7 +45,7 @@ function Compile(rt) {
         config = vscode.workspace.getConfiguration('mql_tools'),
         fileName = pathModule.basename(path),
         extension = pathModule.extname(path).toLowerCase(),
-        PathScript = pathModule.join(__dirname, '../', 'files', 'MQL Tools_Compiler.exe'),
+        PathScript = pathModule.join(__dirname, '../', 'files', 'MQL_Compiler.exe'),
         logDir = config.LogFile.NameLog, Timemini = config.Script.Timetomini,
         mme = config.Script.MiniME, cme = config.Script.CloseME,
         wn = vscode.workspace.name.includes('MQL4'), startT = new Date(),
@@ -435,6 +435,7 @@ function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.compileFile', () => Compile(1)));
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.compileScript', () => Compile(2)));
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.help', () => Help(true)));
+    context.subscriptions.push(vscode.commands.registerCommand('mql_tools.offlineHelp', () => OfflineHelp()));
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.configurations', async () => await CreateProperties()));
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.Addicon', () => IconsInstallation()));
     context.subscriptions.push(vscode.commands.registerCommand('mql_tools.Showfiles', () => ShowFiles('**/*.ex4', '**/*.ex5')));

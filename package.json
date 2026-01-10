@@ -2,7 +2,7 @@
     "name": "mql-clangd",
     "displayName": "MQL Clangd",
     "description": "High-performance MQL4/MQL5 tools with Clangd support. Fork of MQL Tools by L-I-V.",
-    "version": "1.0.6",
+    "version": "1.0.8",
     "publisher": "ngsoftware",
     "engines": {
         "vscode": "^1.75.0"
@@ -111,40 +111,6 @@
                     "default": true,
                     "description": "%mql_tools.configuration.HelpON.description%"
                 },
-                "mql_tools.Help.MQL4HelpLanguage": {
-                    "type": "string",
-                    "default": "Default",
-                    "enum": [
-                        "Default",
-                        "Русский",
-                        "English"
-                    ],
-                    "description": "%mql_tools.configuration.MQL4HelpLanguage.description%"
-                },
-                "mql_tools.Help.MQL5HelpLanguage": {
-                    "type": "string",
-                    "default": "Default",
-                    "enum": [
-                        "Default",
-                        "Русский",
-                        "German",
-                        "Spanish",
-                        "French",
-                        "Chinese",
-                        "Italian",
-                        "Portuguese",
-                        "Turkish",
-                        "Japanese",
-                        "English"
-                    ],
-                    "description": "%mql_tools.configuration.MQL5HelpLanguage.description%"
-                },
-                "mql_tools.Help.HelpVal": {
-                    "type": "number",
-                    "default": 500,
-                    "minimum": 150,
-                    "description": "%mql_tools.configuration.HelpVal.description%"
-                },
                 "mql_tools.context": {
                     "type": "boolean",
                     "default": false,
@@ -218,6 +184,11 @@
             {
                 "command": "mql_tools.help",
                 "title": "%mql_tools.commands.help.title%",
+                "category": "MQL"
+            },
+            {
+                "command": "mql_tools.offlineHelp",
+                "title": "%mql_tools.commands.offlineHelp.title%",
                 "category": "MQL"
             },
             {
@@ -378,8 +349,28 @@
             },
             {
                 "command": "mql_tools.help",
-                "key": "F1",
+                "key": "shift+F1",
                 "when": "config.mql_tools.Help.HelpON == true && resourceExtname == .mq4 || config.mql_tools.Help.HelpON == true && resourceExtname == .mq5 || config.mql_tools.Help.HelpON == true && resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.configurations",
+                "key": "ctrl+alt+m",
+                "when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.openInME",
+                "key": "ctrl+alt+o",
+                "when": "resourceExtname == .mq4 || resourceExtname == .mq5 || resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.commentary",
+                "key": "ctrl+alt+c",
+                "when": "editorTextFocus && resourceExtname == .mq4 || editorTextFocus && resourceExtname == .mq5 || editorTextFocus && resourceExtname == .mqh"
+            },
+            {
+                "command": "mql_tools.InsMQH",
+                "key": "ctrl+alt+i",
+                "when": "editorTextFocus && resourceExtname == .mq4 || editorTextFocus && resourceExtname == .mq5 || editorTextFocus && resourceExtname == .mqh"
             }
         ]
     },
