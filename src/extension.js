@@ -21,7 +21,7 @@ const REG_LINE_FRAGMENT = /\((?=(\d+,\d+).$)/gm;
 const language = vscode.env.language;
 
 const diagnosticCollection = vscode.languages.createDiagnosticCollection('mql');
-const { Help, OfflineHelp } = require("./help");
+const { Help, OfflineHelp, getMql5DocLang } = require("./help");
 const { ShowFiles, InsertNameFileMQH, InsertMQH, InsertNameFileMQL, InsertMQL, InsertResource, InsertImport, InsertTime, InsertIcon, OpenFileInMetaEditor, CreateComment } = require("./contextMenu");
 const { IconsInstallation } = require("./addIcon");
 const { Hover_log, DefinitionProvider, Hover_MQL, ItemProvider, HelpProvider, ColorProvider } = require("./provider");
@@ -152,10 +152,9 @@ function Compile(rt) {
 
                             // Add error code with link to MQL5 documentation
                             if (d.errorCode) {
-                                const docLang = language === 'ru' ? 'ru' : 'en';
                                 diag.code = {
                                     value: `MQL${d.errorCode}`,
-                                    target: vscode.Uri.parse(`https://www.mql5.com/${docLang}/docs/basis/errors/compilationerrors`)
+                                    target: vscode.Uri.parse(`https://www.mql5.com/${getMql5DocLang()}/docs/basis/errors/compilationerrors`)
                                 };
                             }
 
