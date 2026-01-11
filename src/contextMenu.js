@@ -4,6 +4,7 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const pathModule = require('path');
 const ext = require("./extension");
+const { generatePortableSwitch } = require("./createProperties");
 
 
 function ShowFiles(...args) {
@@ -180,14 +181,16 @@ function CreateComment() {
 
 function OpenFileInMetaEditor(uri) {
     const extension = pathModule.extname(uri.fsPath).toLowerCase(), config = vscode.workspace.getConfiguration('mql_tools'), wn = vscode.workspace.name.includes('MQL4'), fileName = pathModule.basename(uri.fsPath);
-    let MetaDir, CommM;
+    let MetaDir, CommM, portableMode;
 
     if (['.mq4', '.mqh'].includes(extension) && wn) {
         MetaDir = config.Metaeditor.Metaeditor4Dir;
+        portableMode = config.Metaeditor.Portable4;
         CommM = ext.lg['path_editor4'];
     }
     else if (['.mq5', '.mqh'].includes(extension) && !wn) {
         MetaDir = config.Metaeditor.Metaeditor5Dir;
+        portableMode = config.Metaeditor.Portable5;
         CommM = ext.lg['path_editor5'];
     }
     else
@@ -200,8 +203,9 @@ function OpenFileInMetaEditor(uri) {
         return vscode.window.showErrorMessage(`${CommM} [${MetaDir}]`);
     }
 
+    const portableSwitch = generatePortableSwitch(portableMode);
     try {
-        childProcess.exec(`"${MetaDir}" "${uri.fsPath}"`);
+        childProcess.exec(`"${MetaDir}" "${uri.fsPath}"${portableSwitch}`);
     }
     catch (e) {
         return vscode.window.showErrorMessage(`${ext.lg['err_open_in_me']} - ${fileName}`);

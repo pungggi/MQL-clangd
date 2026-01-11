@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "\"metaeditor.exe\" 경로: MQL5",
     "mql_tools.configuration.Include4Dir.description": "\"Include\" 폴더 경로: MQL4 (선택사항)",
     "mql_tools.configuration.Include5Dir.description": "\"Include\" 폴더 경로: MQL5 (선택사항)",
+    "mql_tools.configuration.Portable4.description": "MetaTrader 4 휴대용 모드 활성화 (/portable 스위치 사용)",
+    "mql_tools.configuration.Portable5.description": "MetaTrader 5 휴대용 모드 활성화 (/portable 스위치 사용)",
     "mql_tools.configuration.LogDir.description": "로그 파일 이름. 입력하지 않으면 자동으로 생성됩니다",
     "mql_tools.configuration.ShowButtonCompile.description": "컴파일 버튼 표시",
     "mql_tools.configuration.ShowButtonCheck.description": "구문 검사 버튼 표시",
@@ -31,4 +33,3 @@
     "mql_tools.commands.openInME.title": "'MetaEditor'에서 열기",
     "mql_tools.commands.createCommentary.title": "함수 주석 생성"
 }
-

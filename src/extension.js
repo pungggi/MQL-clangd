@@ -28,7 +28,7 @@ const { Help, OfflineHelp, getMql5DocLang } = require("./help");
 const { ShowFiles, InsertNameFileMQH, InsertMQH, InsertNameFileMQL, InsertMQL, InsertResource, InsertImport, InsertTime, InsertIcon, OpenFileInMetaEditor, CreateComment } = require("./contextMenu");
 const { IconsInstallation } = require("./addIcon");
 const { Hover_log, DefinitionProvider, Hover_MQL, ItemProvider, HelpProvider, ColorProvider, obj_items } = require("./provider");
-const { Cpp_prop, CreateProperties } = require("./createProperties");
+const { Cpp_prop, CreateProperties, generatePortableSwitch } = require("./createProperties");
 const outputChannel = vscode.window.createOutputChannel('MQL', 'mql-output');
 
 
@@ -188,16 +188,18 @@ function Compile(rt) {
         wn = vscode.workspace.name.includes('MQL4'), startT = new Date(),
         time = `${tf(startT, 'h')}:${tf(startT, 'm')}:${tf(startT, 's')}`;
 
-    let logFile, command, MetaDir, incDir, CommM, CommI, teq, includefile, log;
+    let logFile, command, MetaDir, incDir, CommM, CommI, teq, includefile, log, portableMode;
 
     if (extension === '.mq4' || (extension === '.mqh' && wn && rt === 0)) {
         MetaDir = config.Metaeditor.Metaeditor4Dir;
         incDir = config.Metaeditor.Include4Dir;
+        portableMode = config.Metaeditor.Portable4;
         CommM = lg['path_editor4'];
         CommI = lg['path_include_4'];
     } else if (extension === '.mq5' || (extension === '.mqh' && !wn && rt === 0)) {
         MetaDir = config.Metaeditor.Metaeditor5Dir;
         incDir = config.Metaeditor.Include5Dir;
+        portableMode = config.Metaeditor.Portable5;
         CommM = lg['path_editor5'];
         CommI = lg['path_include_5'];
     } else if (extension === '.mqh' && rt !== 0) {
@@ -255,7 +257,8 @@ function Compile(rt) {
                     logFile = path.replace(fileName, (fileName.match(/.+(?=\.)/) || [fileName])[0] + '.log');
                 }
 
-                command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"`;
+                const portableSwitch = generatePortableSwitch(portableMode);
+                command = `"${MetaDir}" /compile:"${path}"${includefile}${rt === 1 || (rt === 2 && cme) ? '' : ' /s'} /log:"${logFile}"${portableSwitch}`;
 
                 childProcess.exec(command, async (err, stdout, stderror) => {
 

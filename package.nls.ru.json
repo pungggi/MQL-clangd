@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "Путь к \"metaeditor.exe\": MQL5",
     "mql_tools.configuration.Include4Dir.description": "Путь к папке \"Include\": MQL4 (необязательно)",
     "mql_tools.configuration.Include5Dir.description": "Путь к папке \"Include\": MQL5 (необязательно)",
+    "mql_tools.configuration.Portable4.description": "Включить портативный режим для MetaTrader 4 (использует ключ /portable)",
+    "mql_tools.configuration.Portable5.description": "Включить портативный режим для MetaTrader 5 (использует ключ /portable)",
     "mql_tools.configuration.LogDir.description": "Имя log файла. Если не заполнено, то будет создано автоматически",
     "mql_tools.configuration.ShowButtonCompile.description": "Отображать кнопку компиляции",
     "mql_tools.configuration.ShowButtonCheck.description": "Отображать кнопку проверки синтаксиса",

@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "\"metaeditor.exe\" yolu: MQL5",
     "mql_tools.configuration.Include4Dir.description": "\"Include\" klasör yolu: MQL4 (isteğe bağlı)",
     "mql_tools.configuration.Include5Dir.description": "\"Include\" klasör yolu: MQL5 (isteğe bağlı)",
+    "mql_tools.configuration.Portable4.description": "MetaTrader 4 için taşınabilir modu etkinleştir (/portable anahtarını kullanır)",
+    "mql_tools.configuration.Portable5.description": "MetaTrader 5 için taşınabilir modu etkinleştir (/portable anahtarını kullanır)",
     "mql_tools.configuration.LogDir.description": "Günlük dosyası adı. Doldurulmazsa otomatik olarak oluşturulacaktır",
     "mql_tools.configuration.ShowButtonCompile.description": "Derleme düğmesini göster",
     "mql_tools.configuration.ShowButtonCheck.description": "Sözdizimi kontrol düğmesini göster",
@@ -31,4 +33,3 @@
     "mql_tools.commands.openInME.title": "'MetaEditor'de aç",
     "mql_tools.commands.createCommentary.title": "Fonksiyon yorumu oluştur"
 }
-

@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "Ścieżka do \"metaeditor.exe\": MQL5",
     "mql_tools.configuration.Include4Dir.description": "Ścieżka do folderu \"Include\": MQL4 (opcjonalnie)",
     "mql_tools.configuration.Include5Dir.description": "Ścieżka do folderu \"Include\": MQL5 (opcjonalnie)",
+    "mql_tools.configuration.Portable4.description": "Włącz tryb przenośny dla MetaTrader 4 (używa przełącznika /portable)",
+    "mql_tools.configuration.Portable5.description": "Włącz tryb przenośny dla MetaTrader 5 (używa przełącznika /portable)",
     "mql_tools.configuration.LogDir.description": "Nazwa pliku dziennika. Jeśli nie zostanie wypełnione, zostanie utworzony automatycznie",
     "mql_tools.configuration.ShowButtonCompile.description": "Pokaż przycisk kompilacji",
     "mql_tools.configuration.ShowButtonCheck.description": "Pokaż przycisk sprawdzania składni",
@@ -31,4 +33,3 @@
     "mql_tools.commands.openInME.title": "Otwórz w 'MetaEditor'",
     "mql_tools.commands.createCommentary.title": "Utwórz komentarz funkcji"
 }
-

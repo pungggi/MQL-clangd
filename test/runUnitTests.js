@@ -22,8 +22,9 @@ const mocha = new Mocha({
     timeout: 10000
 });
 
-// Add the logic test file
+// Add the test files
 mocha.addFile(path.resolve(__dirname, 'suite/logic.test.js'));
+mocha.addFile(path.resolve(__dirname, 'suite/extension.test.js'));
 
 // Run the tests
 mocha.run(failures => {

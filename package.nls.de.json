@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "Pfad zu \"metaeditor.exe\": MQL5",
     "mql_tools.configuration.Include4Dir.description": "Pfad zum \"Include\"-Ordner: MQL4 (optional)",
     "mql_tools.configuration.Include5Dir.description": "Pfad zum \"Include\"-Ordner: MQL5 (optional)",
+    "mql_tools.configuration.Portable4.description": "Portablen Modus für MetaTrader 4 aktivieren (verwendet /portable-Schalter)",
+    "mql_tools.configuration.Portable5.description": "Portablen Modus für MetaTrader 5 aktivieren (verwendet /portable-Schalter)",
     "mql_tools.configuration.LogDir.description": "Name der Protokolldatei. Wenn nicht ausgefüllt, wird sie automatisch erstellt",
     "mql_tools.configuration.ShowButtonCompile.description": "Kompilierungsschaltfläche anzeigen",
     "mql_tools.configuration.ShowButtonCheck.description": "Syntaxprüfungsschaltfläche anzeigen",
@@ -31,4 +33,3 @@
     "mql_tools.commands.openInME.title": "In 'MetaEditor' öffnen",
     "mql_tools.commands.createCommentary.title": "Funktionskommentar erstellen"
 }
-

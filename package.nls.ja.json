@@ -4,6 +4,8 @@
     "mql_tools.configuration.Metaeditor5Dir.description": "\"metaeditor.exe\" へのパス：MQL5",
     "mql_tools.configuration.Include4Dir.description": "\"Include\" フォルダへのパス：MQL4（任意）",
     "mql_tools.configuration.Include5Dir.description": "\"Include\" フォルダへのパス：MQL5（任意）",
+    "mql_tools.configuration.Portable4.description": "MetaTrader 4 のポータブルモードを有効にする（/portable スイッチを使用）",
+    "mql_tools.configuration.Portable5.description": "MetaTrader 5 のポータブルモードを有効にする（/portable スイッチを使用）",
     "mql_tools.configuration.LogDir.description": "ログファイル名。未入力の場合は自動的に作成されます",
     "mql_tools.configuration.ShowButtonCompile.description": "コンパイルボタンを表示",
     "mql_tools.configuration.ShowButtonCheck.description": "構文チェックボタンを表示",
@@ -31,4 +33,3 @@
     "mql_tools.commands.openInME.title": "'MetaEditor' で開く",
     "mql_tools.commands.createCommentary.title": "関数コメントを作成"
 }
-

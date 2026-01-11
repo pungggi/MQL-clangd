@@ -2,7 +2,7 @@
     "name": "mql-clangd",
     "displayName": "MQL Clangd",
     "description": "High-performance MQL4/MQL5 tools with Clangd support. Fork of MQL Tools by L-I-V.",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "publisher": "ngsoftware",
     "engines": {
         "vscode": "^1.75.0",
@@ -70,6 +70,16 @@
                     "type": "string",
                     "default": "",
                     "description": "%mql_tools.configuration.Include5Dir.description%"
+                },
+                "mql_tools.Metaeditor.Portable4": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%mql_tools.configuration.Portable4.description%"
+                },
+                "mql_tools.Metaeditor.Portable5": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%mql_tools.configuration.Portable5.description%"
                 },
                 "mql_tools.LogFile.NameLog": {
                     "type": "string",

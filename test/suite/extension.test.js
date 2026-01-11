@@ -13,7 +13,7 @@ Module._load = function (request) {
 
 // 2. Load the modules under test (they will now get the mock)
 const { replaceLog } = require('../../src/extension');
-const { normalizePath } = require('../../src/createProperties');
+const { normalizePath, generatePortableSwitch } = require('../../src/createProperties');
 
 suite('Core Logic Unit Tests (Independent)', () => {
 
@@ -54,5 +54,81 @@ suite('Core Logic Unit Tests (Independent)', () => {
         const logStr = '0 error(s), 0 warning(s), compile time: 100 msec';
         const result = replaceLog(logStr, true);
         assert.strictEqual(result.error, false);
+    });
+});
+
+suite('Portable Mode Tests', () => {
+    suite('generatePortableSwitch function', () => {
+        test('should return empty string when portable mode is disabled', () => {
+            const result = generatePortableSwitch(false);
+            assert.strictEqual(result, '');
+        });
+
+        test('should return " /portable" when portable mode is enabled', () => {
+            const result = generatePortableSwitch(true);
+            assert.strictEqual(result, ' /portable');
+        });
+
+        test('should handle undefined as falsy (disabled)', () => {
+            const result = generatePortableSwitch(undefined);
+            assert.strictEqual(result, '');
+        });
+
+        test('should handle null as falsy (disabled)', () => {
+            const result = generatePortableSwitch(null);
+            assert.strictEqual(result, '');
+        });
+    });
+
+    suite('Compile command integration', () => {
+        test('compile command without portable mode uses production function', () => {
+            const MetaDir = 'C:\\Program Files\\MetaTrader 5\\metaeditor64.exe';
+            const filePath = 'C:\\Users\\Test\\MQL5\\Experts\\test.mq5';
+            const includefile = ' /include:"C:\\Users\\Test\\MQL5\\Include"';
+            const logFile = 'C:\\Users\\Test\\MQL5\\Experts\\test.log';
+            const portableSwitch = generatePortableSwitch(false);
+
+            const command = `"${MetaDir}" /compile:"${filePath}"${includefile} /s /log:"${logFile}"${portableSwitch}`;
+
+            assert.ok(!command.includes('/portable'), 'Command should not include /portable when disabled');
+            assert.ok(command.includes('/compile:'), 'Command should include /compile');
+            assert.ok(command.includes('/log:'), 'Command should include /log');
+        });
+
+        test('compile command with portable mode uses production function', () => {
+            const MetaDir = 'C:\\Program Files\\MetaTrader 5\\metaeditor64.exe';
+            const filePath = 'C:\\Users\\Test\\MQL5\\Experts\\test.mq5';
+            const includefile = ' /include:"C:\\Users\\Test\\MQL5\\Include"';
+            const logFile = 'C:\\Users\\Test\\MQL5\\Experts\\test.log';
+            const portableSwitch = generatePortableSwitch(true);
+
+            const command = `"${MetaDir}" /compile:"${filePath}"${includefile} /s /log:"${logFile}"${portableSwitch}`;
+
+            assert.ok(command.includes('/portable'), 'Command should include /portable when enabled');
+            assert.ok(command.endsWith('/portable'), 'Command should end with /portable');
+        });
+    });
+
+    suite('Open in MetaEditor command integration', () => {
+        test('open command without portable mode uses production function', () => {
+            const MetaDir = 'C:\\Program Files\\MetaTrader 5\\metaeditor64.exe';
+            const filePath = 'C:\\Users\\Test\\MQL5\\Experts\\test.mq5';
+            const portableSwitch = generatePortableSwitch(false);
+
+            const command = `"${MetaDir}" "${filePath}"${portableSwitch}`;
+
+            assert.ok(!command.includes('/portable'), 'Command should not include /portable when disabled');
+        });
+
+        test('open command with portable mode uses production function', () => {
+            const MetaDir = 'C:\\Program Files\\MetaTrader 5\\metaeditor64.exe';
+            const filePath = 'C:\\Users\\Test\\MQL5\\Experts\\test.mq5';
+            const portableSwitch = generatePortableSwitch(true);
+
+            const command = `"${MetaDir}" "${filePath}"${portableSwitch}`;
+
+            assert.ok(command.includes('/portable'), 'Command should include /portable when enabled');
+            assert.ok(command.endsWith('/portable'), 'Command should end with /portable');
+        });
     });
 });

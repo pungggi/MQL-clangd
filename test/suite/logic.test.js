@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 // Import functions from createProperties
-const { normalizePath, isSourceExtension, detectMqlVersion, generateIncludeFlag, generateBaseFlags, generateProjectFlags } = require('../../src/createProperties');
+const { normalizePath, isSourceExtension, detectMqlVersion, generateIncludeFlag, generateBaseFlags, generateProjectFlags, generatePortableSwitch } = require('../../src/createProperties');
 
 suite('Pure Logic Unit Tests', () => {
     suite('Path Normalization', () => {
@@ -145,6 +145,16 @@ suite('Pure Logic Unit Tests', () => {
             assert.ok(!isSourceExtension(null));
             assert.ok(!isSourceExtension(undefined));
             assert.ok(!isSourceExtension(''));
+        });
+    });
+
+    suite('Portable Switch Generation', () => {
+        test('should return empty string when portable mode is disabled', () => {
+            assert.strictEqual(generatePortableSwitch(false), '');
+        });
+
+        test('should return " /portable" when portable mode is enabled', () => {
+            assert.strictEqual(generatePortableSwitch(true), ' /portable');
         });
     });
 });

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.10
+
+### Configuration
+- **Portable Mode Support**: Added `Portable4` and `Portable5` settings to enable MetaTrader's `/portable` switch for compilation and opening files in MetaEditor. This is useful for portable MetaTrader installations that store data in the terminal folder instead of AppData.
+
 ## 1.0.9
 
 ### QuickFixes

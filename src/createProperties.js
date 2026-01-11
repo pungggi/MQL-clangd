@@ -26,6 +26,15 @@ function isSourceExtension(ext) {
 }
 
 /**
+ * Generates the portable switch string for MetaEditor commands.
+ * @param {boolean} portableMode - Whether portable mode is enabled
+ * @returns {string} - Empty string or ' /portable'
+ */
+function generatePortableSwitch(portableMode) {
+    return portableMode ? ' /portable' : '';
+}
+
+/**
  * Generates an include flag for the compiler.
  * Uses normalized forward-slash paths for clangd compatibility.
  * @param {string} includePath - The include path
@@ -444,5 +453,6 @@ module.exports = {
     detectMqlVersion,
     generateIncludeFlag,
     generateBaseFlags,
-    generateProjectFlags
+    generateProjectFlags,
+    generatePortableSwitch
 };
